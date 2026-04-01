@@ -1,0 +1,178 @@
+import { Project, FeaturedProject } from "./types";
+
+export const projects: Record<string, Project> = {
+	AirPosture: {
+		cover: "air-ban.png",
+		coverAlt: "AirPosture app interface",
+		description: "AirPods as an AI Posture Coach on iOS",
+		links: {
+			" iOS app": "/blog/air",
+		},
+	},
+	"Past Projects": {
+		description: "",
+		noCrop: true,
+	},
+};
+
+export const featuredProjects: FeaturedProject[] = [
+	{
+		name: "Horus",
+		description: "A Self-Organizing AI Memory Engine",
+		cover: "2048.png",
+		coverAlt: "YTTL interface",
+		links: {
+			Beta: "https://www.instagram.com/allen.35mm/",
+		},
+	},
+	{
+		name: "AirPosture",
+		description: "AirPods as an AI Posture Coach on iOS",
+		cover: "air-ban.png",
+		coverAlt: "AirPosture app interface",
+		links: {
+			iOS: "https://airposture.pro",
+		},
+	},
+];
+
+export const projectIcons: Record<string, string> = {
+	AirPosture: "/images/projects/Air8.png",
+	YTTL: "/images/projects/ht3.png",
+	default: "/images/projects/ht3.png",
+};
+
+export const orbitingImages = [
+	{
+		angle: 0,
+		image: "/images/projects/ht3.png",
+		alt: "AL",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.7, 1.0],
+		rotationSpeed: 2,
+		orbitOffset: 0,
+	},
+	{
+		angle: 22.5,
+		image: "/images/corner.png",
+		alt: "Corner",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.7, 1.0],
+		rotationSpeed: 1.9,
+		orbitOffset: 0,
+	},
+	{
+		angle: 45,
+		image: "/images/projects/github.png",
+		alt: "GitHub",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.87, 1.12],
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: -1.8,
+		orbitOffset: 0,
+	},
+	{
+		angle: 90,
+		image: "/images/projects/f.png",
+		alt: "Lemotsh",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.88, 1.15],
+		opacityRange: [0.75, 1.0],
+		rotationSpeed: 1.8,
+		orbitOffset: 0,
+	},
+	{
+		angle: 135,
+		image: "/images/projects/craft.png",
+		alt: "LAM",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [1.03, 1.32], // 20% bigger
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: -1.5,
+		orbitOffset: 0,
+	},
+	{
+		angle: 180,
+		image: "/images/projects/Air8.png",
+		alt: "Air8",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.92, 1.14],
+		opacityRange: [0.75, 1.0],
+		rotationSpeed: 2.2,
+		orbitOffset: 0,
+	},
+	{
+		angle: 225,
+		image: "/images/projects/twitter.png",
+		alt: "Ale Dev",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [1.03, 1.32], // 20% bigger
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: 1.5,
+		orbitOffset: 0,
+	},
+	{
+		angle: 270,
+		image: "/images/tt.png",
+		alt: "TT",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.95, 1.2],
+		opacityRange: [0.75, 1.0],
+		rotationSpeed: 3,
+		orbitOffset: 0,
+	},
+	{
+		angle: 290,
+		image: "/images/finder.png",
+		alt: "Finder",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.75, 1.0],
+		rotationSpeed: 2.5,
+		orbitOffset: 0,
+	},
+	{
+		angle: 315,
+		image: "/images/projects/movie.png",
+		alt: "Movies",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: -2,
+		orbitOffset: 0,
+	},
+	{
+		angle: 337.5,
+		image: "/images/projects/co-s.png",
+		alt: "Co",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: 2,
+		orbitOffset: 0,
+	},
+	{
+		angle: 10,
+		image: "/images/projects/88-s.png",
+		alt: "88MPH",
+		speedMultiplier: 1.0,
+		orbitRadiusMultiplier: 1.0,
+		scaleRange: [0.9, 1.15],
+		opacityRange: [0.8, 1.0],
+		rotationSpeed: 2,
+		orbitOffset: 0,
+	},
+];

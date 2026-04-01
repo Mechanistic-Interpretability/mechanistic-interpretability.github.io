@@ -1,0 +1,19 @@
+---
+title: "Deep Residual Learning for Image Recognition"
+authors: ["Kaiming He", "Xiangyu Zhang", "Shaoqing Ren", "Jian Sun"]
+venue: "CVPR"
+year: 2016
+category: "Anthropic"
+abstract: "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions."
+url: "https://arxiv.org/abs/1234.5678"
+
+order: 2
+---
+
+## Core Concept
+
+ResNets introduced skip connections that allow gradients to flow directly through the network, solving the vanishing gradient problem in very deep networks. This enabled training of networks with 100+ layers.
+
+## Architecture
+
+The key insight was that it's easier to optimize the residual mapping F(x) = H(x) - x than to optimize the original unreferenced mapping H(x). The formulation F(x) + x can be realized by feedforward neural networks with shortcut connections.

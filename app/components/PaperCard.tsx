@@ -1,0 +1,239 @@
+"use client";
+
+import { useState, useRef, useCallback } from "react";
+import type { Paper } from "@/lib/papers";
+
+interface PaperCardProps {
+	paper: Paper;
+	isSelected: boolean;
+	onClick: () => void;
+	index: number;
+}
+
+export function PaperCard({
+	paper,
+	isSelected,
+	onClick,
+	index,
+}: PaperCardProps) {
+	const [isHovered, setIsHovered] = useState(false);
+	const [transform, setTransform] = useState("");
+	const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 });
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	// Random slight rotation for scattered paper effect (-3 to +3 degrees)
+	const baseRotation = useRef(((index % 7) - 3) * 0.8);
+
+	const handleMouseMove = useCallback(
+		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (!cardRef.current) return;
+
+			const rect = cardRef.current.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			const mouseX = e.clientX - centerX;
+			const mouseY = e.clientY - centerY;
+
+			const rotateX = (mouseY / (rect.height / 2)) * -8;
+			const rotateY = (mouseX / (rect.width / 2)) * 8;
+
+			setTransform(
+				`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05) rotate(${baseRotation.current}deg)`,
+			);
+
+			const glareX = ((e.clientX - rect.left) / rect.width) * 100;
+			const glareY = ((e.clientY - rect.top) / rect.height) * 100;
+			setGlarePosition({ x: glareX, y: glareY });
+		},
+		[],
+	);
+
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+		setTransform(
+			`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) rotate(${baseRotation.current}deg)`,
+		);
+	};
+
+	// Get venue badge color
+	const getVenueColor = (venue: string) => {
+		const venueColors: Record<string, string> = {
+			NeurIPS:
+				"bg-amber-500/20 text-amber-700 border-amber-500/30 dark:bg-amber-500/20 dark:text-amber-300",
+			ICML: "bg-blue-500/20 text-blue-700 border-blue-500/30 dark:bg-blue-500/20 dark:text-blue-300",
+			ICLR: "bg-purple-500/20 text-purple-700 border-purple-500/30 dark:bg-purple-500/20 dark:text-purple-300",
+			Nature: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30 dark:bg-emerald-500/20 dark:text-emerald-300",
+			Science:
+				"bg-red-500/20 text-red-700 border-red-500/30 dark:bg-red-500/20 dark:text-red-300",
+			arXiv: "bg-slate-500/20 text-slate-700 border-slate-500/30 dark:bg-slate-500/20 dark:text-slate-300",
+		};
+		return (
+			venueColors[venue] ||
+			"bg-violet-500/20 text-violet-700 border-violet-500/30 dark:bg-violet-500/20 dark:text-violet-300"
+		);
+	};
+
+	return (
+		<div
+			ref={cardRef}
+			className="paper-card-wrapper relative cursor-pointer"
+			style={{
+				transform:
+					transform ||
+					`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) rotate(${baseRotation.current}deg)`,
+				transformStyle: "preserve-3d",
+				transition: isHovered
+					? "transform 0.15s ease-out"
+					: "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
+				zIndex: isHovered ? 10 : 1,
+			}}
+			onMouseMove={handleMouseMove}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			onClick={onClick}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					onClick();
+				}
+			}}
+			role="button"
+			tabIndex={0}
+			aria-pressed={isSelected}
+		>
+			{/* Paper Card */}
+			<div
+				className={`paper-card relative overflow-hidden rounded-sm border-2 transition-all duration-300 ${
+					isSelected
+						? "border-violet-500/70 shadow-[0_8px_30px_rgba(139,92,246,0.4)]"
+						: "border-slate-300/50 shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:border-slate-600/50"
+				} ${
+					isHovered
+						? "shadow-[0_12px_40px_rgba(0,0,0,0.25)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
+						: ""
+				}`}
+			>
+				{/* Paper texture background */}
+				<div className="paper-texture pointer-events-none absolute inset-0" />
+
+				{/* Content area */}
+				<div className="relative flex h-full flex-col bg-gradient-to-br from-[#fefefe] to-[#f5f5f5] p-5 dark:from-[#1a1a1a] dark:to-[#121212]">
+					{/* Paper fiber effect */}
+					<div
+						className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+						style={{
+							backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+						}}
+					/>
+
+					{/* Venue badge */}
+					<div className="mb-4 flex items-center justify-between">
+						<span
+							className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold tracking-wider ${getVenueColor(paper.venue)}`}
+						>
+							{paper.venue}
+						</span>
+						<span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+							{paper.year}
+						</span>
+					</div>
+
+					{/* Title */}
+					<h3 className="mb-3 line-clamp-3 text-base font-bold leading-tight text-slate-900 dark:text-slate-100">
+						{paper.title}
+					</h3>
+
+					{/* Authors */}
+					<p className="mb-auto line-clamp-2 text-sm italic text-slate-600 dark:text-slate-400">
+						{paper.authors.slice(0, 2).join(", ")}
+						{paper.authors.length > 2 && " et al."}
+					</p>
+
+					{/* Category indicator */}
+					<div className="mt-4 flex items-center gap-2">
+						<div className="h-2 w-2 rounded-full bg-violet-500" />
+						<span className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
+							{paper.category}
+						</span>
+					</div>
+
+					{/* URL Link Section */}
+					<div className="mt-auto pt-3">
+						{paper.url ? (
+							<a
+								href={paper.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								onClick={(e) => e.stopPropagation()}
+								className="flex items-center gap-1 rounded border border-slate-400/40 bg-slate-100/80 px-2 py-1 font-mono text-[9px] text-slate-600 transition-all hover:border-violet-400/60 hover:bg-violet-50/50 hover:text-violet-600 dark:border-slate-600/40 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-violet-500/30 dark:hover:bg-violet-900/20 dark:hover:text-violet-400"
+							>
+								<svg
+									className="h-3 w-3"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+									/>
+								</svg>
+								<span className="truncate">Link</span>
+							</a>
+						) : (
+							<div className="flex items-center gap-1 rounded border border-slate-300/30 bg-slate-50/50 px-2 py-1 font-mono text-[9px] text-slate-400 dark:border-slate-700/30 dark:bg-slate-800/30 dark:text-slate-500">
+								<svg
+									className="h-3 w-3"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+								<span>No URL</span>
+							</div>
+						)}
+					</div>
+
+					{/* Selected indicator */}
+					{isSelected && (
+						<div className="absolute right-2 top-2 h-2 w-2 rounded-full bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+					)}
+				</div>
+
+				{/* Glare effect on hover */}
+				{isHovered && (
+					<div
+						className="pointer-events-none absolute inset-0"
+						style={{
+							background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.25) 0%, transparent 60%)`,
+							transition: "background 0.1s ease-out",
+						}}
+					/>
+				)}
+
+				{/* Corner fold effect */}
+				<div className="pointer-events-none absolute bottom-0 right-0 h-6 w-6 overflow-hidden">
+					<div
+						className="absolute bottom-0 right-0 h-[85%] w-[85%] bg-gradient-to-tl from-slate-300/40 to-transparent dark:from-slate-700/40"
+						style={{
+							clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
+						}}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+}
