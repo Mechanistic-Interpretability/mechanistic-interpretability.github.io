@@ -7,15 +7,22 @@ interface CRTTypographyProps {
 	text: string;
 	speed?: number;
 	className?: string;
+	autoDisappear?: boolean;
+	disappearDelay?: number;
 }
 
 export function CRTTypography({
 	text,
 	speed = 80,
 	className = "",
+	autoDisappear = true,
+	disappearDelay = 3000,
 }: CRTTypographyProps) {
 	const [displayText, setDisplayText] = useState("");
 	const [showCursor, setShowCursor] = useState(true);
+	const [isTypingComplete, setIsTypingComplete] = useState(false);
+	const [opacity, setOpacity] = useState(1);
+	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
 		let currentIndex = 0;
@@ -25,6 +32,7 @@ export function CRTTypography({
 				currentIndex++;
 			} else {
 				clearInterval(interval);
+				setIsTypingComplete(true);
 			}
 		}, speed);
 
@@ -39,9 +47,32 @@ export function CRTTypography({
 		return () => clearInterval(cursorInterval);
 	}, []);
 
+	// Auto-disappear effect
+	useEffect(() => {
+		if (!autoDisappear || !isTypingComplete) return;
+
+		// Start fade out after disappearDelay
+		const fadeTimer = setTimeout(() => {
+			setOpacity(0);
+		}, disappearDelay);
+
+		// Remove from DOM after fade animation
+		const hideTimer = setTimeout(() => {
+			setIsVisible(false);
+		}, disappearDelay + 800);
+
+		return () => {
+			clearTimeout(fadeTimer);
+			clearTimeout(hideTimer);
+		};
+	}, [autoDisappear, isTypingComplete, disappearDelay]);
+
+	if (!isVisible) return null;
+
 	return (
 		<div
-			className={`relative hidden w-full max-w-lg lg:block ${className}`}
+			className={`relative hidden w-full max-w-lg transition-opacity duration-700 ease-out lg:block ${className}`}
+			style={{ opacity }}
 		>
 			{/* Main panel container - matches DesktopIconRow style */}
 			<div
