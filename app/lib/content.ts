@@ -38,7 +38,7 @@ const papers = defineCollection({
 		authors: z.array(z.string()),
 		venue: z.string(),
 		year: z.number(),
-		category: z.enum(["Anthropic", "DeepMind"]),
+		category: z.enum(["Anthropic", "DeepMind", "Google", "OpenAI", "Meta"]),
 		url: z.string().optional(),
 		abstract: z.string(),
 		order: z.number().optional(),

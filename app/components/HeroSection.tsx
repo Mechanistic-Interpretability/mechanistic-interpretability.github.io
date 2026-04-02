@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopIconRow } from "./DesktopIconRow";
 import { MobileIconRoll } from "./MobileIconRoll";
+import { CRTTypography } from "./CRTTypography";
 import { siteConfig } from "@/config";
 
 interface HeroSectionProps {
@@ -37,6 +38,14 @@ const HeroSection = ({
 	return (
 		<div ref={containerRef} className="relative w-full px-2 py-6">
 			<div className="relative z-10">
+				{/* CRT Title - Desktop Only */}
+				<div className="mb-6 hidden justify-center lg:flex">
+					<CRTTypography
+						text="Mechanistic Interpretability"
+						speed={60}
+					/>
+				</div>
+
 				<div
 					className="relative mx-auto max-w-md transition-transform duration-100"
 					style={{
@@ -46,7 +55,7 @@ const HeroSection = ({
 					<button
 						onClick={onMacClick}
 						onDoubleClick={onMacDoubleClick}
-						className="cursor-pointer border-0 bg-transparent p-0"
+						className="cursor-pointer border-0 bg-transparent p-0 focus:outline-none"
 						aria-label="Open terminal"
 					>
 						<Image

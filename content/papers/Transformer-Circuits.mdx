@@ -1,0 +1,38 @@
+---
+title: "A Mathematical Framework for Transformer Circuits"
+authors:
+    [
+        "Nelson Elhage",
+        "Neel Nanda",
+        "Catherine Olsson",
+        "Tom Henighan",
+        "Nicholas Joseph",
+        "Ben Mann",
+        "Amanda Askell",
+        "Yuntao Bai",
+        "Anna Chen",
+        "Tom Conerly",
+        "Nova DasSarma",
+        "Dawn Drain",
+        "Deep Ganguli",
+        "Zac Hatfield-Dodds",
+        "Chris Olah...",
+        
+    ]
+venue: "arXiv"
+year: 2021
+category: "Anthropic"
+abstract: "We present a mathematical framework for reverse-engineering transformer language models into human-interpretable circuits. We introduce the residual stream as a communication channel, decompose attention heads into QK and OV circuits, and analyze multi-layer composition. The framework is demonstrated by fully reverse-engineering small attention-only transformers."
+url: "https://transformer-circuits.pub/2021/framework/index.html"
+order: 5
+---
+
+## Impact
+
+The paper introduces the key vocabulary and decomposition tools of the field: the residual stream as a bandwidth-limited communication bus, attention heads as independent low-rank linear operations, and the QK/OV circuit factorization. It argues that transformers possess enormous linear structure and that most of their behavior can be understood by tracing matrix multiplications through the model.
+
+These relationships enabled better resource allocation for training large models.
+
+## Implications
+
+This is the founding document of mechanistic interpretability. Every subsequent paper in the Transformer Circuits thread — and most circuit-level work outside Anthropic — builds directly on this framework. It is the first paper to read before entering the field.

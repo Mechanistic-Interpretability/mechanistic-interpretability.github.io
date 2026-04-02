@@ -9,7 +9,14 @@ interface GroupedPapers {
 	[category: string]: Paper[];
 }
 
-const categories = ["All", "Anthropic", "DeepMind"] as const;
+const categories = [
+	"All",
+	"Anthropic",
+	"DeepMind",
+	"Google",
+	"OpenAI",
+	"Meta",
+] as const;
 type Category = (typeof categories)[number];
 
 export function PapersContent() {
