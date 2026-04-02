@@ -185,7 +185,7 @@ export function RetroDesktop({
 								: "border-black/15 bg-black/[0.04] text-black/40"
 						}`}
 					>
-						San Francisco
+						SF
 					</span>
 					<div
 						className={`h-px w-12 ${
