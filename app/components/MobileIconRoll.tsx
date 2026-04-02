@@ -21,7 +21,9 @@ export function MobileIconRoll({
 
 	const handleIconClick = (alt: string) => {
 		if (alt === "Finder") {
-			router.push("/memories");
+			router.push("/links");
+		} else if (alt === "TT") {
+			router.push("/papers");
 		} else if (alt === "YouTube") {
 			window.open(
 				"https://www.youtube.com/playlist?list=PLVKInMnQd_D3dMw9WfDvZLJzUEDpAWnug",
