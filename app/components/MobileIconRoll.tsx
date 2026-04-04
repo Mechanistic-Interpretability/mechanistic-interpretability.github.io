@@ -21,7 +21,7 @@ export function MobileIconRoll({
 
 	const handleIconClick = (alt: string) => {
 		if (alt === "Finder") {
-			router.push("/links");
+			window.open("https://x.com/allenleexyz", "_blank");
 		} else if (alt === "TT") {
 			router.push("/hub");
 		} else if (alt === "YouTube") {
@@ -30,7 +30,10 @@ export function MobileIconRoll({
 				"_blank",
 			);
 		} else if (alt === "Terminal") {
-			onTerminalClick?.();
+			window.open(
+				"https://scholar.google.com.tw/scholar?as_ylo=2026&q=mechanistic+interpretability&hl=en&as_sdt=0,5&as_vis=1",
+				"_blank",
+			);
 		} else {
 			onImageClick?.(alt);
 		}
@@ -99,12 +102,12 @@ export function MobileIconRoll({
 					}}
 				>
 					{(() => {
-						// TT (Blog), Finder (Memories), YouTube, Terminal
+						// TT (Blog), YouTube, Terminal, Finder (ale-dev)
 						const desiredOrder = [
 							"TT",
-							"Finder",
 							"YouTube",
 							"Terminal",
+							"Finder",
 						];
 
 						const imageMap = new Map(
@@ -117,7 +120,7 @@ export function MobileIconRoll({
 									return (
 										<MobileIconItem
 											key="Terminal"
-											image="/images/ghost.png"
+											image="/images/g.png"
 											alt="Terminal"
 											onClick={() =>
 												handleIconClick("Terminal")
@@ -133,6 +136,18 @@ export function MobileIconRoll({
 											alt="YouTube"
 											onClick={() =>
 												handleIconClick("YouTube")
+											}
+										/>
+									);
+								}
+								if (alt === "Finder") {
+									return (
+										<MobileIconItem
+											key="Finder"
+											image="/images/ale-dev.png"
+											alt="Finder"
+											onClick={() =>
+												handleIconClick("Finder")
 											}
 										/>
 									);

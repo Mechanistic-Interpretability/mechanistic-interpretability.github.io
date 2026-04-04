@@ -67,7 +67,7 @@ export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
 								</svg>
 							</div>
 							<span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-								Featured Papers
+								Featured
 							</span>
 						</div>
 						<button
