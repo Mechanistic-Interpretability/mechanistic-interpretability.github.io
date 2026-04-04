@@ -106,23 +106,23 @@ export function PaperCard({
 			tabIndex={0}
 			aria-pressed={isSelected}
 		>
-			{/* Paper Card */}
+			{/* Paper Card - Skeuomorphic like ResourceGrid */}
 			<div
-				className={`paper-card relative overflow-hidden rounded-sm border-2 transition-all duration-300 ${
+				className={`paper-card relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-2 shadow-[0_8px_20px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_10px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] ${
 					isSelected
 						? "border-violet-500/70 shadow-[0_8px_30px_rgba(139,92,246,0.4)]"
-						: "border-slate-300/50 shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:border-slate-600/50"
+						: ""
 				} ${
 					isHovered
 						? "shadow-[0_12px_40px_rgba(0,0,0,0.25)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
 						: ""
 				}`}
 			>
-				{/* Paper texture background */}
-				<div className="paper-texture pointer-events-none absolute inset-0" />
+				{/* Plastic grain */}
+				<div className="plastic-grain pointer-events-none absolute inset-0 rounded-xl" />
 
-				{/* Content area */}
-				<div className="relative flex h-full flex-col bg-gradient-to-br from-[#fefefe] to-[#f5f5f5] p-4 dark:from-[#1a1a1a] dark:to-[#121212] sm:p-6 md:p-8">
+				{/* Content area - Styled like ResourceGrid image container */}
+				<div className="relative flex h-full flex-col overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-4 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:p-6 md:p-8">
 					{/* Paper fiber effect */}
 					<div
 						className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -144,20 +144,20 @@ export function PaperCard({
 					</div>
 
 					{/* Title */}
-					<h3 className="mb-2 line-clamp-4 text-base font-bold leading-tight text-slate-900 dark:text-slate-100 sm:mb-3 sm:text-lg md:mb-4">
+					<h3 className="mb-2 line-clamp-4 text-sm font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-base">
 						{paper.title}
 					</h3>
 
 					{/* Authors */}
-					<p className="mb-auto line-clamp-3 text-sm italic text-slate-600 dark:text-slate-400 sm:text-base">
+					<p className="mb-auto line-clamp-3 text-xs italic text-slate-600 dark:text-slate-400">
 						{paper.authors.slice(0, 2).join(", ")}
 						{paper.authors.length > 2 && " et al."}
 					</p>
 
 					{/* Category indicator */}
-					<div className="mt-4 flex items-center gap-2 sm:mt-5 md:mt-6">
-						<div className="h-2 w-2 rounded-full bg-violet-500 sm:h-2.5 sm:w-2.5" />
-						<span className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 sm:text-sm">
+					<div className="mt-3 flex items-center gap-2 sm:mt-4">
+						<div className="h-2 w-2 rounded-full bg-violet-500" />
+						<span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
 							{paper.category}
 						</span>
 					</div>

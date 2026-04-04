@@ -242,7 +242,7 @@ export default function ResourceGrid({
 			{/* Masonry Grid */}
 			<div
 				ref={parentRef}
-				className="columns-1 gap-3 space-y-3 sm:gap-4 sm:space-y-4 md:columns-2 md:gap-5 lg:gap-6 lg:space-y-6"
+				className="columns-1 gap-3 space-y-3 sm:gap-4 sm:space-y-4 md:columns-3 md:gap-5 lg:gap-6 lg:space-y-6"
 				style={{
 					columnFill: "balance",
 				}}
