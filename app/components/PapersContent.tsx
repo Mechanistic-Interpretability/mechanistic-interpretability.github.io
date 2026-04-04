@@ -204,27 +204,27 @@ export function PapersContent() {
 
 	return (
 		<>
-			<div className="mx-auto w-full max-w-6xl px-4 pt-8">
+			<div className="mx-auto w-full max-w-6xl px-2 pt-4 sm:px-4 sm:pt-8">
 				{/* MI Hub Panel */}
-				<div className="relative overflow-hidden rounded-2xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_12px_28px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-6px_12px_rgba(71,85,105,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_16px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-6px_14px_rgba(0,0,0,0.5)] sm:rounded-[1.4rem] sm:p-2">
+				<div className="relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_12px_28px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-6px_12px_rgba(71,85,105,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_16px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-6px_14px_rgba(0,0,0,0.5)] sm:rounded-2xl sm:p-1.5 md:rounded-[1.4rem] md:p-2">
 					{/* Plastic grain */}
 					<div className="plastic-grain pointer-events-none absolute inset-0 rounded-2xl sm:rounded-[1.4rem]" />
 					{/* Shell highlight */}
 					<div className="pointer-events-none absolute inset-x-6 top-1 h-4 rounded-full bg-white/50 blur-md dark:bg-white/10" />
 
 					{/* Inner bezel */}
-					<div className="relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:rounded-2xl">
+					<div className="relative overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:rounded-xl md:rounded-2xl">
 						{/* Content area */}
-						<div className="relative overflow-hidden rounded-xl bg-[#edf2f8] p-4 dark:bg-[#0a0a0a]">
+						<div className="relative overflow-hidden rounded-lg bg-[#edf2f8] p-2 dark:bg-[#0a0a0a] sm:p-3 md:p-4">
 							{/* Screen curvature */}
 							<div className="pointer-events-none absolute inset-0 z-10 rounded-xl shadow-[inset_0_0_40px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_0_50px_rgba(0,0,0,0.6)]" />
 
 							{/* Header with view toggle */}
-							<div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-								<div className="flex items-center gap-3">
-									<div className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_3px_rgba(15,23,42,0.2)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)]">
+							<div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+								<div className="flex items-center gap-2 sm:gap-3">
+									<div className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_3px_rgba(15,23,42,0.2)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)] sm:h-8 sm:w-8 sm:rounded-lg">
 										<svg
-											className="h-4 w-4 text-slate-700 dark:text-slate-300"
+											className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300 sm:h-4 sm:w-4"
 											fill="none"
 											viewBox="0 0 24 24"
 											stroke="currentColor"
@@ -237,7 +237,7 @@ export function PapersContent() {
 											/>
 										</svg>
 									</div>
-									<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+									<h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 sm:text-xl">
 										{getPageTitle()}
 									</h2>
 								</div>
@@ -254,7 +254,7 @@ export function PapersContent() {
 							{activeView === "papers" && (
 								<>
 									{/* Search bar */}
-									<div className="mb-4 flex items-center gap-2 rounded-lg border border-slate-400/50 bg-white/60 px-3 py-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)] dark:border-slate-600/50 dark:bg-black/40 dark:shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]">
+									<div className="mb-3 flex items-center gap-2 rounded-lg border border-slate-400/50 bg-white/60 px-2 py-1.5 shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)] dark:border-slate-600/50 dark:bg-black/40 dark:shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] sm:mb-4 sm:px-3 sm:py-2">
 										<span className="font-mono text-xs text-violet-600 dark:text-violet-400">
 											&gt;
 										</span>
@@ -265,7 +265,7 @@ export function PapersContent() {
 											onChange={(e) =>
 												setSearchQuery(e.target.value)
 											}
-											placeholder="Search papers by title, author, venue... (Cmd+K)"
+											placeholder="Search papers..."
 											className="flex-1 bg-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none dark:text-slate-300 dark:placeholder-slate-500"
 										/>
 										{searchQuery && (
@@ -281,9 +281,9 @@ export function PapersContent() {
 									</div>
 
 									{/* Ultra-compact Filter tabs - horizontally scrollable */}
-									<div className="mb-4">
-										<div className="scrollbar-hide -mx-4 flex overflow-x-auto px-4 pb-1">
-											<div className="relative flex shrink-0 gap-0.5 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-0.5 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
+									<div className="mb-3 sm:mb-4">
+										<div className="scrollbar-hide -mx-2 flex overflow-x-auto px-2 pb-1 sm:-mx-4 sm:px-4">
+											<div className="relative flex shrink-0 gap-1 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
 												{/* Plastic grain texture */}
 												<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
 
@@ -296,7 +296,7 @@ export function PapersContent() {
 																	tab.id as Category,
 																)
 															}
-															className={`relative shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-all duration-200 ${
+															className={`relative shrink-0 rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-2 sm:py-1 sm:text-[11px] ${
 																activeCategory ===
 																tab.id
 																	? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_3px_rgba(0,0,0,0.3)]"
@@ -306,7 +306,7 @@ export function PapersContent() {
 															<span className="flex items-center justify-center gap-1">
 																{tab.label}
 																<span
-																	className={`rounded-full px-1 py-0 text-[9px] font-semibold ${
+																	className={`rounded-full px-1.5 py-0 text-[10px] font-semibold sm:px-1 sm:text-[9px] ${
 																		activeCategory ===
 																		tab.id
 																			? "bg-zinc-100 text-zinc-600 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)] dark:bg-zinc-500 dark:text-zinc-200"
@@ -324,9 +324,9 @@ export function PapersContent() {
 									</div>
 
 									{/* Papers grid - scattered desk layout */}
-									<div className="relative min-h-[400px]">
+									<div className="relative min-h-[300px] sm:min-h-[400px]">
 										{filteredPapers.length > 0 ? (
-											<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+											<div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
 												{filteredPapers
 													.slice(0, displayCount)
 													.map((paper, index) => (
@@ -350,10 +350,10 @@ export function PapersContent() {
 													))}
 											</div>
 										) : (
-											<div className="flex h-64 flex-col items-center justify-center text-slate-400 dark:text-slate-600">
-												<div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+											<div className="flex h-48 flex-col items-center justify-center text-slate-400 dark:text-slate-600 sm:h-64">
+												<div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 sm:mb-4 sm:h-16 sm:w-16">
 													<svg
-														className="h-8 w-8"
+														className="h-6 w-6 sm:h-8 sm:w-8"
 														fill="none"
 														stroke="currentColor"
 														viewBox="0 0 24 24"
@@ -366,10 +366,10 @@ export function PapersContent() {
 														/>
 													</svg>
 												</div>
-												<p className="text-center text-lg">
+												<p className="text-center text-base sm:text-lg">
 													No papers found
 												</p>
-												<p className="text-center text-sm">
+												<p className="text-center text-xs sm:text-sm">
 													Try adjusting your search or
 													filter
 												</p>
@@ -379,7 +379,7 @@ export function PapersContent() {
 
 									{/* Load More button */}
 									{filteredPapers.length > displayCount && (
-										<div className="mt-8 flex justify-center">
+										<div className="mt-4 flex justify-center sm:mt-8">
 											<button
 												onClick={() =>
 													setDisplayCount((prev) =>
@@ -389,7 +389,7 @@ export function PapersContent() {
 														),
 													)
 												}
-												className="group relative overflow-hidden rounded-lg border border-violet-500/50 bg-violet-500/20 px-6 py-3 text-sm font-medium text-violet-700 transition-all duration-200 hover:border-violet-600 hover:bg-violet-500/30 dark:border-violet-500/40 dark:bg-violet-900/30 dark:text-violet-300 dark:hover:border-violet-400 dark:hover:bg-violet-900/40"
+												className="group relative overflow-hidden rounded-lg border border-violet-500/50 bg-violet-500/20 px-4 py-2 text-xs font-medium text-violet-700 transition-all duration-200 hover:border-violet-600 hover:bg-violet-500/30 dark:border-violet-500/40 dark:bg-violet-900/30 dark:text-violet-300 dark:hover:border-violet-400 dark:hover:bg-violet-900/40 sm:px-6 sm:py-3 sm:text-sm"
 											>
 												<span className="relative z-10 flex items-center gap-2">
 													<span>
@@ -399,7 +399,7 @@ export function PapersContent() {
 														remaining)
 													</span>
 													<svg
-														className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
+														className="h-3 w-3 transition-transform duration-200 group-hover:translate-y-0.5 sm:h-4 sm:w-4"
 														fill="none"
 														viewBox="0 0 24 24"
 														stroke="currentColor"

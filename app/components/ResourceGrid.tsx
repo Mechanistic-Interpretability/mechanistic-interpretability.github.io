@@ -205,9 +205,9 @@ export default function ResourceGrid({
 	return (
 		<>
 			{/* Ultra-compact Filter tabs - horizontally scrollable */}
-			<div className="mb-4">
-				<div className="scrollbar-hide -mx-4 flex overflow-x-auto px-4 pb-1">
-					<div className="relative flex shrink-0 gap-0.5 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-0.5 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
+			<div className="mb-3 sm:mb-4">
+				<div className="scrollbar-hide -mx-2 flex overflow-x-auto px-2 pb-1 sm:-mx-4 sm:px-4">
+					<div className="relative flex shrink-0 gap-1 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
 						{/* Plastic grain texture */}
 						<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
 
@@ -215,7 +215,7 @@ export default function ResourceGrid({
 							<button
 								key={tab.id}
 								onClick={() => setActiveFilter(tab.id)}
-								className={`relative shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-all duration-200 ${
+								className={`relative shrink-0 rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-2 sm:py-1 sm:text-[11px] ${
 									activeFilter === tab.id
 										? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_3px_rgba(0,0,0,0.3)]"
 										: "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
@@ -224,7 +224,7 @@ export default function ResourceGrid({
 								<span className="flex items-center justify-center gap-1">
 									{tab.label}
 									<span
-										className={`rounded-full px-1 py-0 text-[9px] font-semibold ${
+										className={`rounded-full px-1.5 py-0 text-[10px] font-semibold sm:px-1 sm:text-[9px] ${
 											activeFilter === tab.id
 												? "bg-zinc-100 text-zinc-600 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)] dark:bg-zinc-500 dark:text-zinc-200"
 												: "bg-zinc-200/60 text-zinc-500 dark:bg-zinc-700/60 dark:text-zinc-400"
@@ -239,10 +239,10 @@ export default function ResourceGrid({
 				</div>
 			</div>
 
-			{/* Masonry Grid - Larger cards */}
+			{/* Masonry Grid */}
 			<div
 				ref={parentRef}
-				className="columns-1 gap-5 space-y-5 sm:columns-2 lg:gap-6 lg:space-y-6"
+				className="columns-1 gap-3 space-y-3 sm:gap-4 sm:space-y-4 md:columns-2 md:gap-5 lg:gap-6 lg:space-y-6"
 				style={{
 					columnFill: "balance",
 				}}
@@ -296,8 +296,8 @@ export default function ResourceGrid({
 			</div>
 
 			{filteredResources.length === 0 && (
-				<div className="flex h-64 items-center justify-center rounded-2xl border border-zinc-200 bg-neutral-100/50 dark:border-zinc-800 dark:bg-neutral-900/50">
-					<p className="text-zinc-500 dark:text-zinc-400">
+				<div className="flex h-48 items-center justify-center rounded-xl border border-zinc-200 bg-neutral-100/50 dark:border-zinc-800 dark:bg-neutral-900/50 sm:h-64 sm:rounded-2xl">
+					<p className="text-sm text-zinc-500 dark:text-zinc-400">
 						No {viewType} in this category.
 					</p>
 				</div>

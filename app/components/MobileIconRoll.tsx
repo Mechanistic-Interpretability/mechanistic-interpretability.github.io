@@ -31,7 +31,7 @@ export function MobileIconRoll({
 			);
 		} else if (alt === "Terminal") {
 			window.open(
-				"https://scholar.google.com.tw/scholar?as_ylo=2026&q=mechanistic+interpretability&hl=en&as_sdt=0,5&as_vis=1",
+				"https://scholar.google.com.tw/scholar?hl=en&as_sdt=0,5&as_vis=1&q=%22mechanistic+interpretability%22&scisbd=1",
 				"_blank",
 			);
 		} else {
