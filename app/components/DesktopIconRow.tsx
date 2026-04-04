@@ -114,7 +114,7 @@ export function DesktopIconRow({
 									return (
 										<DesktopIconItem
 											key="Terminal"
-											image="/images/ghost.png"
+											image="/images/g.png"
 											alt="Terminal"
 											onClick={() =>
 												handleIconClick("Terminal")
