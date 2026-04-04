@@ -23,7 +23,7 @@ export function MobileIconRoll({
 		if (alt === "Finder") {
 			router.push("/links");
 		} else if (alt === "TT") {
-			router.push("/papers");
+			router.push("/hub");
 		} else if (alt === "YouTube") {
 			window.open(
 				"https://www.youtube.com/playlist?list=PLVKInMnQd_D3dMw9WfDvZLJzUEDpAWnug",

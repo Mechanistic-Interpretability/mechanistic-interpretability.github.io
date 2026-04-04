@@ -21,9 +21,9 @@ export function DesktopIconRow({
 
 	const handleIconClick = (alt: string) => {
 		if (alt === "Finder") {
-			router.push("/links");
+			window.open("https://x.com/allenleexyz", "_blank");
 		} else if (alt === "TT") {
-			router.push("/papers");
+			router.push("/hub");
 		} else if (alt === "YouTube") {
 			window.open(
 				"https://www.youtube.com/playlist?list=PLVKInMnQd_D3dMw9WfDvZLJzUEDpAWnug",
@@ -94,12 +94,12 @@ export function DesktopIconRow({
 					}}
 				>
 					{(() => {
-						// TT (Blog), Finder (Memories), YouTube, Terminal
+						// TT (Blog), YouTube, Terminal, Finder (ale-dev)
 						const desiredOrder = [
 							"TT",
-							"Finder",
 							"YouTube",
 							"Terminal",
+							"Finder",
 						];
 
 						// Create a map for quick lookup
@@ -130,6 +130,18 @@ export function DesktopIconRow({
 											alt="YouTube"
 											onClick={() =>
 												handleIconClick("YouTube")
+											}
+										/>
+									);
+								}
+								if (alt === "Finder") {
+									return (
+										<DesktopIconItem
+											key="Finder"
+											image="/images/ale-dev.png"
+											alt="Finder"
+											onClick={() =>
+												handleIconClick("Finder")
 											}
 										/>
 									);

@@ -23,6 +23,8 @@ export default function Page() {
 			window.open("https://github.com/allenv0", "_blank");
 		} else if (imageAlt === "Ale Dev") {
 			window.open("https://x.com/allenleexyz", "_blank");
+		} else if (imageAlt === "Finder") {
+			window.open("https://x.com/allenleexyz", "_blank");
 		} else if (imageAlt === "LAM") {
 			const copyEmail = async () => {
 				try {

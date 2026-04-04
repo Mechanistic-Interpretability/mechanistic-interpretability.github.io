@@ -122,7 +122,7 @@ export function PaperCard({
 				<div className="paper-texture pointer-events-none absolute inset-0" />
 
 				{/* Content area */}
-				<div className="relative flex h-full flex-col bg-gradient-to-br from-[#fefefe] to-[#f5f5f5] p-5 dark:from-[#1a1a1a] dark:to-[#121212]">
+				<div className="relative flex h-full flex-col bg-gradient-to-br from-[#fefefe] to-[#f5f5f5] p-8 dark:from-[#1a1a1a] dark:to-[#121212]">
 					{/* Paper fiber effect */}
 					<div
 						className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -132,32 +132,32 @@ export function PaperCard({
 					/>
 
 					{/* Venue badge */}
-					<div className="mb-4 flex items-center justify-between">
+					<div className="mb-6 flex items-center justify-between">
 						<span
-							className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold tracking-wider ${getVenueColor(paper.venue)}`}
+							className={`inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-bold tracking-wider ${getVenueColor(paper.venue)}`}
 						>
 							{paper.venue}
 						</span>
-						<span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+						<span className="font-mono text-sm text-slate-500 dark:text-slate-400">
 							{paper.year}
 						</span>
 					</div>
 
 					{/* Title */}
-					<h3 className="mb-3 line-clamp-3 text-base font-bold leading-tight text-slate-900 dark:text-slate-100">
+					<h3 className="mb-4 line-clamp-4 text-lg font-bold leading-tight text-slate-900 dark:text-slate-100">
 						{paper.title}
 					</h3>
 
 					{/* Authors */}
-					<p className="mb-auto line-clamp-2 text-sm italic text-slate-600 dark:text-slate-400">
+					<p className="mb-auto line-clamp-3 text-base italic text-slate-600 dark:text-slate-400">
 						{paper.authors.slice(0, 2).join(", ")}
 						{paper.authors.length > 2 && " et al."}
 					</p>
 
 					{/* Category indicator */}
-					<div className="mt-4 flex items-center gap-2">
-						<div className="h-2 w-2 rounded-full bg-violet-500" />
-						<span className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
+					<div className="mt-6 flex items-center gap-2">
+						<div className="h-2.5 w-2.5 rounded-full bg-violet-500" />
+						<span className="text-sm font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
 							{paper.category}
 						</span>
 					</div>

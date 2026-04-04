@@ -9,27 +9,49 @@ import {
 	IconChevronRight,
 	IconExternalLink,
 } from "@tabler/icons-react";
-import LinkCard from "./LinkCard";
+import type { Resource } from "@/lib/papers";
 
-interface ImageData {
-	filename: string;
-	category?: string;
-	url?: string;
+interface ResourceGridProps {
+	resources: Resource[];
+	viewType?: "people" | "resources";
 }
 
-interface MasonryGridProps {
-	images: ImageData[];
-}
+const peopleCategories = [
+	"All",
+	"Anthropic",
+	"DeepMind",
+	"Google",
+	"OpenAI",
+	"Meta",
+] as const;
 
-const categories = ["All", "Anthropic", "DeepMind", "Resources"] as const;
-type Category = (typeof categories)[number];
+const resourceCategories = [
+	"All",
+	"Resources",
+	"Anthropic",
+	"DeepMind",
+	"Google",
+	"OpenAI",
+	"Meta",
+] as const;
 
-export default function MasonryGrid({ images }: MasonryGridProps) {
+type PeopleCategory = (typeof peopleCategories)[number];
+type ResourceCategory = (typeof resourceCategories)[number];
+
+export default function ResourceGrid({
+	resources,
+	viewType = "resources",
+}: ResourceGridProps) {
 	const parentRef = useRef<HTMLDivElement>(null);
 	const [lightboxOpen, setLightboxOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [activeFilter, setActiveFilter] = useState<Category>("All");
-	const [filteredImages, setFilteredImages] = useState<ImageData[]>(images);
+	const [activeFilter, setActiveFilter] = useState<string>("All");
+	const [filteredResources, setFilteredResources] =
+		useState<Resource[]>(resources);
+
+	// Get appropriate categories based on view type
+	const categories =
+		viewType === "people" ? peopleCategories : resourceCategories;
 
 	// Touch state for swipe gestures
 	const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
@@ -38,28 +60,30 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 
 	// Load filter from localStorage on mount
 	useEffect(() => {
-		const savedFilter = localStorage.getItem("links-filter") as Category;
-		if (savedFilter && categories.includes(savedFilter)) {
+		const storageKey =
+			viewType === "people" ? "people-filter" : "resources-filter";
+		const savedFilter = localStorage.getItem(storageKey);
+		if (savedFilter && categories.some((cat) => cat === savedFilter)) {
 			setActiveFilter(savedFilter);
 		}
-	}, []);
+	}, [viewType, categories]);
 
 	// Save filter to localStorage when it changes
 	useEffect(() => {
-		localStorage.setItem("links-filter", activeFilter);
-	}, [activeFilter]);
+		localStorage.setItem(`${viewType}-filter`, activeFilter);
+	}, [activeFilter, viewType]);
 
-	// Filter images when category changes
+	// Filter resources when category changes
 	useEffect(() => {
 		if (activeFilter === "All") {
-			setFilteredImages(images);
+			setFilteredResources(resources);
 		} else {
-			const filtered = images.filter(
-				(img) => img.category === activeFilter,
+			const filtered = resources.filter(
+				(res) => res.category === activeFilter,
 			);
-			setFilteredImages(filtered);
+			setFilteredResources(filtered);
 		}
-	}, [activeFilter, images]);
+	}, [activeFilter, resources]);
 
 	// Setup auto-animate
 	useEffect(() => {
@@ -78,15 +102,16 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 	}, []);
 
 	const goToNext = useCallback(() => {
-		setCurrentIndex((prev) => (prev + 1) % filteredImages.length);
-	}, [filteredImages.length]);
+		setCurrentIndex((prev) => (prev + 1) % filteredResources.length);
+	}, [filteredResources.length]);
 
 	const goToPrev = useCallback(() => {
 		setCurrentIndex(
 			(prev) =>
-				(prev - 1 + filteredImages.length) % filteredImages.length,
+				(prev - 1 + filteredResources.length) %
+				filteredResources.length,
 		);
-	}, [filteredImages.length]);
+	}, [filteredResources.length]);
 
 	// Touch event handlers for swipe gestures
 	const onTouchStart = useCallback((e: React.TouchEvent) => {
@@ -157,47 +182,51 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 		};
 	}, [lightboxOpen]);
 
-	const currentImage = filteredImages[currentIndex];
-	const hasUrl = !!currentImage?.url;
-	const isGif = currentImage?.filename.toLowerCase().endsWith(".gif");
+	const currentResource = filteredResources[currentIndex];
+	const hasUrl = !!currentResource?.url;
+	const isGif = currentResource?.image.toLowerCase().endsWith(".gif");
 
 	// Calculate counts for each category
-	const getCategoryCount = (category: Category) => {
-		if (category === "All") return images.length;
-		return images.filter((img) => img.category === category).length;
+	const getCategoryCount = (category: string) => {
+		if (category === "All") return resources.length;
+		return resources.filter((res) => res.category === category).length;
 	};
 
-	const tabs = categories.map((category) => ({
-		id: category,
-		label: category,
-		count: getCategoryCount(category),
-	}));
+	const tabs = categories
+		.filter(
+			(category) => category === "All" || getCategoryCount(category) > 0,
+		)
+		.map((category) => ({
+			id: category,
+			label: category,
+			count: getCategoryCount(category),
+		}));
 
 	return (
 		<>
-			{/* Filter tabs */}
-			<div className="mb-6 sm:mb-8">
-				<div className="scrollbar-hide -mx-4 flex snap-x snap-mandatory overflow-x-auto px-4 sm:mx-0 sm:justify-center sm:overflow-visible sm:px-0">
-					<div className="relative flex shrink-0 gap-1 rounded-2xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_8px_20px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_10px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] sm:inline-flex">
+			{/* Ultra-compact Filter tabs - horizontally scrollable */}
+			<div className="mb-4">
+				<div className="scrollbar-hide -mx-4 flex overflow-x-auto px-4 pb-1">
+					<div className="relative flex shrink-0 gap-0.5 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-0.5 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
 						{/* Plastic grain texture */}
-						<div className="plastic-grain pointer-events-none absolute inset-0 rounded-2xl" />
+						<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
 
 						{tabs.map((tab) => (
 							<button
 								key={tab.id}
 								onClick={() => setActiveFilter(tab.id)}
-								className={`relative shrink-0 snap-center rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200 sm:rounded-2xl sm:px-5 sm:py-2.5 ${
+								className={`relative shrink-0 rounded-md px-2 py-1 text-[11px] font-medium transition-all duration-200 ${
 									activeFilter === tab.id
-										? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.2)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_2px_6px_rgba(0,0,0,0.4)]"
+										? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_3px_rgba(0,0,0,0.3)]"
 										: "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
 								} `}
 							>
-								<span className="flex items-center justify-center gap-1.5 sm:gap-2">
+								<span className="flex items-center justify-center gap-1">
 									{tab.label}
 									<span
-										className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold sm:px-2.5 sm:text-xs ${
+										className={`rounded-full px-1 py-0 text-[9px] font-semibold ${
 											activeFilter === tab.id
-												? "bg-zinc-100 text-zinc-600 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1)] dark:bg-zinc-500 dark:text-zinc-200"
+												? "bg-zinc-100 text-zinc-600 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)] dark:bg-zinc-500 dark:text-zinc-200"
 												: "bg-zinc-200/60 text-zinc-500 dark:bg-zinc-700/60 dark:text-zinc-400"
 										} `}
 									>
@@ -210,41 +239,72 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 				</div>
 			</div>
 
+			{/* Masonry Grid - Larger cards */}
 			<div
 				ref={parentRef}
-				className="columns-1 gap-4 space-y-4 sm:columns-2 lg:columns-3 xl:columns-4"
+				className="columns-1 gap-5 space-y-5 sm:columns-2 lg:gap-6 lg:space-y-6"
 				style={{
 					columnFill: "balance",
 				}}
 			>
-				{filteredImages.map((image, index) => (
+				{filteredResources.map((resource, index) => (
 					<div
-						key={image.filename}
-						className="break-inside-avoid"
+						key={resource._meta.path}
+						className="cursor-pointer break-inside-avoid"
 						style={{
 							animationDelay: `${index * 50}ms`,
 						}}
+						onClick={() => openLightbox(index)}
 					>
-						<LinkCard
-							image={image.filename}
-							hasUrl={!!image.url}
-							priority={index < 6}
-							onClick={() => openLightbox(index)}
-						/>
+						{/* Resource Card - Skeuomorphic */}
+						<div className="group relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-2 shadow-[0_8px_20px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(15,23,42,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_10px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] dark:hover:shadow-[0_14px_32px_rgba(0,0,0,0.6)]">
+							{/* Plastic grain */}
+							<div className="plastic-grain pointer-events-none absolute inset-0 rounded-xl" />
+
+							{/* Image container */}
+							<div className="relative overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)]">
+								<Image
+									src={`/images/resources/${resource.image}`}
+									alt={resource.title}
+									width={600}
+									height={450}
+									className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
+									priority={index < 4}
+									unoptimized={isGif}
+								/>
+
+								{/* Category badge */}
+								<div className="absolute left-2 top-2 rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9]/90 to-[#c3cdda]/90 px-2 py-1 text-[10px] font-medium text-zinc-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.2)] backdrop-blur-sm dark:border-slate-600/70 dark:from-[#252d38]/90 dark:to-[#151b24]/90 dark:text-zinc-300 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)]">
+									{resource.category}
+								</div>
+							</div>
+
+							{/* Title section */}
+							<div className="mt-2.5 px-1 pb-1">
+								<h3 className="line-clamp-2 text-base font-semibold leading-tight text-zinc-800 dark:text-zinc-200">
+									{resource.title}
+								</h3>
+								{resource.description && (
+									<p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-400">
+										{resource.description}
+									</p>
+								)}
+							</div>
+						</div>
 					</div>
 				))}
 			</div>
 
-			{filteredImages.length === 0 && (
+			{filteredResources.length === 0 && (
 				<div className="flex h-64 items-center justify-center rounded-2xl border border-zinc-200 bg-neutral-100/50 dark:border-zinc-800 dark:bg-neutral-900/50">
 					<p className="text-zinc-500 dark:text-zinc-400">
-						No images in this category.
+						No {viewType} in this category.
 					</p>
 				</div>
 			)}
 
 			{/* Lightbox */}
-			{lightboxOpen && currentImage && (
+			{lightboxOpen && currentResource && (
 				<div
 					className="animate-fade-in fixed inset-0 z-50 flex touch-pan-y items-center justify-center p-4"
 					onClick={closeLightbox}
@@ -267,13 +327,13 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 						/>
 					</button>
 
-					{/* Image counter — skeuomorphic */}
+					{/* Resource counter — skeuomorphic */}
 					<div className="absolute left-4 top-4 z-50 rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] px-4 py-2 text-sm font-medium text-zinc-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.3)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:text-zinc-300 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.5)] sm:left-6 sm:top-6">
-						{currentIndex + 1} / {filteredImages.length}
+						{currentIndex + 1} / {filteredResources.length}
 					</div>
 
 					{/* Navigation buttons — skeuomorphic, hidden on mobile */}
-					{filteredImages.length > 1 && (
+					{filteredResources.length > 1 && (
 						<>
 							<button
 								onClick={(e) => {
@@ -281,7 +341,7 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 									goToPrev();
 								}}
 								className="absolute left-4 top-1/2 z-50 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.3)] transition-all duration-200 hover:scale-110 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_8px_rgba(15,23,42,0.2)] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.3)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.5)] sm:left-8 md:flex"
-								aria-label="Previous image"
+								aria-label="Previous resource"
 							>
 								<IconChevronLeft
 									size={24}
@@ -294,7 +354,7 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 									goToNext();
 								}}
 								className="absolute right-4 top-1/2 z-50 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.3)] transition-all duration-200 hover:scale-110 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_8px_rgba(15,23,42,0.2)] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.3)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.5)] sm:right-8 md:flex"
-								aria-label="Next image"
+								aria-label="Next resource"
 							>
 								<IconChevronRight
 									size={24}
@@ -348,11 +408,11 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 									{/* Image - reduced height to fit button below */}
 									<div className="relative z-[5] flex items-center justify-center p-2 sm:p-4">
 										<Image
-											src={`/images/projects/${currentImage.filename}`}
-											alt={`Link ${currentIndex + 1}`}
+											src={`/images/resources/${currentResource.image}`}
+											alt={currentResource.title}
 											width={1400}
 											height={1000}
-											className="h-auto max-h-[60vh] w-auto max-w-[85vw] rounded object-contain"
+											className="h-auto max-h-[55vh] w-auto max-w-[85vw] rounded object-contain"
 											unoptimized={isGif}
 											priority
 										/>
@@ -364,16 +424,28 @@ export default function MasonryGrid({ images }: MasonryGridProps) {
 							<div className="mt-2 flex items-center justify-center gap-2 px-1">
 								<div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 								<span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-0.5 font-mono text-[10px] tracking-[0.15em] text-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-									{currentImage.filename}
+									{currentResource.category}
 								</span>
 								<div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+							</div>
+
+							{/* Resource info */}
+							<div className="mt-3 text-center">
+								<h3 className="text-lg font-semibold text-white">
+									{currentResource.title}
+								</h3>
+								{currentResource.description && (
+									<p className="mt-1 text-sm text-white/70">
+										{currentResource.description}
+									</p>
+								)}
 							</div>
 
 							{/* Visit Link Button — Prominent */}
 							{hasUrl && (
 								<div className="mt-3 flex justify-center">
 									<a
-										href={currentImage.url}
+										href={currentResource.url}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="flex items-center gap-2 rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] px-6 py-3 font-medium text-zinc-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_4px_12px_rgba(15,23,42,0.3)] transition-all duration-200 hover:scale-105 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_6px_20px_rgba(15,23,42,0.35)] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.3)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:text-zinc-200 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_6px_20px_rgba(0,0,0,0.5)]"

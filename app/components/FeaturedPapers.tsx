@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import allPapers from "@/lib/papers";
+import { papers } from "@/lib/papers";
 import { PanelScrew } from "./PanelScrew";
 
 interface FeaturedPapersProps {
@@ -11,13 +11,22 @@ interface FeaturedPapersProps {
 export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
 	const router = useRouter();
 
-	// Get top papers sorted by order, limited to specified count
-	const featuredPapers = allPapers
-		.sort((a, b) => (a.order || 0) - (b.order || 0))
+	// Get papers sorted by date (most recent first), limited to specified count
+	const featuredPapers = papers
+		.sort((a, b) => {
+			// Sort by date if available, otherwise fall back to order
+			const dateA = a.date ? new Date(a.date).getTime() : 0;
+			const dateB = b.date ? new Date(b.date).getTime() : 0;
+			if (dateA && dateB) {
+				return dateB - dateA; // Most recent first
+			}
+			// Fall back to order if no dates
+			return (b.order || 0) - (a.order || 0);
+		})
 		.slice(0, limit);
 
 	const handleViewAll = () => {
-		router.push("/papers");
+		router.push("/hub");
 	};
 
 	return (
@@ -76,7 +85,7 @@ export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
 								<div
 									key={paper._meta.path}
 									className="group cursor-pointer rounded-lg border border-slate-400/30 bg-white/40 p-2.5 transition-all duration-200 hover:border-violet-400/50 hover:bg-white/60 dark:border-slate-600/30 dark:bg-black/20 dark:hover:border-violet-500/40 dark:hover:bg-black/30"
-									onClick={() => router.push(`/papers`)}
+									onClick={() => router.push(`/hub`)}
 								>
 									<div className="flex items-start gap-2">
 										<div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded border border-slate-400/40 bg-slate-100/80 text-xs font-medium text-slate-600 dark:border-slate-600/40 dark:bg-slate-800/80 dark:text-slate-400">

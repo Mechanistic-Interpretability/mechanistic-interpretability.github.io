@@ -7,7 +7,11 @@ const posts = defineCollection({
 	name: "posts",
 	directory: "../../content",
 	include: "**/*.{md,mdx}",
-	exclude: ["papers/**/*.{md,mdx}"],
+	exclude: [
+		"papers/**/*.{md,mdx}",
+		"resources/**/*.{md,mdx}",
+		"links/**/*.{md,mdx}",
+	],
 	schema: (z) => ({
 		title: z.string(),
 		date: z.coerce.date(),
@@ -42,6 +46,7 @@ const papers = defineCollection({
 		url: z.string().optional(),
 		abstract: z.string(),
 		order: z.number().optional(),
+		date: z.coerce.date().optional(),
 	}),
 	transform: async (document, context) => {
 		const mdx = await compileMDX(context, document, {
@@ -54,6 +59,39 @@ const papers = defineCollection({
 	},
 });
 
+const resources = defineCollection({
+	name: "resources",
+	directory: "../../content/resources",
+	include: "**/*.{md,mdx}",
+	schema: (z) => ({
+		title: z.string(),
+		description: z.string().optional(),
+		url: z.string().url(),
+		category: z.enum([
+			"Anthropic",
+			"DeepMind",
+			"Google",
+			"OpenAI",
+			"Meta",
+			"Resources",
+		]),
+		image: z.string(),
+		featured: z.boolean().default(false),
+		order: z.number().optional(),
+		date: z.coerce.date().optional(),
+	}),
+	transform: async (document, context) => {
+		const mdx = await compileMDX(context, document, {
+			remarkPlugins: [[remarkSmartypants, { dashes: true }]],
+		});
+		return {
+			...document,
+			mdx,
+		};
+	},
+});
+
+// Keep links collection for backward compatibility during migration
 const links = defineCollection({
 	name: "links",
 	directory: "../../content/links",
@@ -67,7 +105,6 @@ const links = defineCollection({
 		),
 	}),
 	transform: async (document, context) => {
-		// Create a lookup map for images
 		const imageMap = new Map(
 			document.images.map((img) => [img.filename, img.url]),
 		);
@@ -80,11 +117,11 @@ const links = defineCollection({
 });
 
 export default defineConfig({
-	collections: [posts, papers, links],
+	collections: [posts, papers, resources, links],
 });
 
 function getReadingTime(content: string) {
 	const words = content.split(/\s+/g).length;
-	const minutes = Math.ceil(words / 200); // 200 words per minute
+	const minutes = Math.ceil(words / 200);
 	return minutes;
 }
