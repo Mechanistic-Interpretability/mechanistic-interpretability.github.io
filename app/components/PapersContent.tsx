@@ -326,7 +326,7 @@ export function PapersContent() {
 									{/* Papers grid - scattered desk layout */}
 									<div className="relative min-h-[300px] sm:min-h-[400px]">
 										{filteredPapers.length > 0 ? (
-											<div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
+											<div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5 lg:gap-6">
 												{filteredPapers
 													.slice(0, displayCount)
 													.map((paper, index) => (

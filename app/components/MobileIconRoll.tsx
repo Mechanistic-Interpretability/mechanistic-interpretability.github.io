@@ -120,7 +120,7 @@ export function MobileIconRoll({
 									return (
 										<MobileIconItem
 											key="Terminal"
-											image="/images/g.png"
+											image="/images/gs.png"
 											alt="Terminal"
 											onClick={() =>
 												handleIconClick("Terminal")

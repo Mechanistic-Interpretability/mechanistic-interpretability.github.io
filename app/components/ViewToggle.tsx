@@ -50,9 +50,7 @@ export function ViewToggle({
 									: "text-zinc-500 dark:text-zinc-500"
 							}
 						/>
-						<span className="hidden sm:inline">
-							Research Papers
-						</span>
+						<span className="hidden sm:inline">Papers</span>
 						<span className="sm:hidden">Papers</span>
 						<span
 							className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
