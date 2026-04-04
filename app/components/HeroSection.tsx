@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopIconRow } from "./DesktopIconRow";
 import { MobileIconRoll } from "./MobileIconRoll";
-import { CRTTypography } from "./CRTTypography";
+import { FeaturedPapers } from "./FeaturedPapers";
 import { siteConfig } from "@/config";
 
 interface HeroSectionProps {
@@ -38,16 +38,8 @@ const HeroSection = ({
 	return (
 		<div ref={containerRef} className="relative w-full px-2 py-6">
 			<div className="relative z-10">
-				{/* CRT Title - Desktop Only */}
-				<div className="mb-6 hidden justify-center lg:flex">
-					<CRTTypography
-						text="Mechanistic Interpretability"
-						speed={60}
-					/>
-				</div>
-
 				<div
-					className="relative mx-auto max-w-md transition-transform duration-100"
+					className="relative mx-auto max-w-[12rem] transition-transform duration-100"
 					style={{
 						transform: `translateY(${parallaxOffset * 0.2}px)`,
 					}}
@@ -71,9 +63,10 @@ const HeroSection = ({
 			</div>
 
 			<div
-				className="flex flex-col items-center transition-transform duration-100"
+				className="flex flex-col items-center gap-3 transition-transform duration-100"
 				style={{ transform: `translateY(${parallaxOffset * -0.1}px)` }}
 			>
+				<FeaturedPapers limit={3} />
 				<DesktopIconRow
 					onImageClick={onOrbitingImageClick}
 					onTerminalClick={onTerminalClick}
