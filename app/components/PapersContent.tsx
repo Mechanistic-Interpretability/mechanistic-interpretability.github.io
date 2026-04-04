@@ -26,6 +26,7 @@ export function PapersContent() {
 	const [activeCategory, setActiveCategory] = useState<Category>("All");
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isDetailOpen, setIsDetailOpen] = useState(false);
+	const [displayCount, setDisplayCount] = useState(12);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	// Get selected paper data
@@ -76,6 +77,11 @@ export function PapersContent() {
 		setIsDetailOpen(false);
 		setTimeout(() => setSelectedPaperPath(null), 300);
 	}, []);
+
+	// Reset display count when filters change
+	useEffect(() => {
+		setDisplayCount(12);
+	}, [activeCategory, searchQuery]);
 
 	// Handle keyboard shortcut for search focus
 	useEffect(() => {
@@ -188,22 +194,24 @@ export function PapersContent() {
 							<div className="relative min-h-[400px]">
 								{filteredPapers.length > 0 ? (
 									<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-										{filteredPapers.map((paper, index) => (
-											<PaperCard
-												key={paper._meta.path}
-												paper={paper}
-												isSelected={
-													selectedPaperPath ===
-													paper._meta.path
-												}
-												onClick={() =>
-													handlePaperClick(
-														paper._meta.path,
-													)
-												}
-												index={index}
-											/>
-										))}
+										{filteredPapers
+											.slice(0, displayCount)
+											.map((paper, index) => (
+												<PaperCard
+													key={paper._meta.path}
+													paper={paper}
+													isSelected={
+														selectedPaperPath ===
+														paper._meta.path
+													}
+													onClick={() =>
+														handlePaperClick(
+															paper._meta.path,
+														)
+													}
+													index={index}
+												/>
+											))}
 									</div>
 								) : (
 									<div className="flex h-64 flex-col items-center justify-center text-slate-400 dark:text-slate-600">
@@ -222,6 +230,46 @@ export function PapersContent() {
 												/>
 											</svg>
 										</div>
+										{/* Load More button */}
+										{filteredPapers.length >
+											displayCount && (
+											<div className="mt-8 flex justify-center">
+												<button
+													onClick={() =>
+														setDisplayCount(
+															(prev) =>
+																Math.min(
+																	prev + 12,
+																	filteredPapers.length,
+																),
+														)
+													}
+													className="group relative overflow-hidden rounded-lg border border-violet-500/50 bg-violet-500/20 px-6 py-3 text-sm font-medium text-violet-700 transition-all duration-200 hover:border-violet-600 hover:bg-violet-500/30 dark:border-violet-500/40 dark:bg-violet-900/30 dark:text-violet-300 dark:hover:border-violet-400 dark:hover:bg-violet-900/40"
+												>
+													<span className="relative z-10 flex items-center gap-2">
+														<span>
+															Load more (
+															{filteredPapers.length -
+																displayCount}{" "}
+															remaining)
+														</span>
+														<svg
+															className="h-4 w-4 transition-transform duration-200 group-hover:translate-y-0.5"
+															fill="none"
+															viewBox="0 0 24 24"
+															stroke="currentColor"
+														>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																strokeWidth={2}
+																d="M19 9l-7 7-7-7"
+															/>
+														</svg>
+													</span>
+												</button>
+											</div>
+										)}
 										<p className="text-center text-lg">
 											No papers found
 										</p>
