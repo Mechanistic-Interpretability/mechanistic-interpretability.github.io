@@ -1,0 +1,135 @@
+---
+title: How to Learn MI Research by Claude
+date: 2026-09-19 14:00:00 -07:00
+summary: Escape the AI deadzone
+cover: /images/cc.png
+coverAlt: A metallic rainbow artwork on a black background.
+---
+
+![Framer's Component Picker](/images/cc.png)
+
+
+*Advice from Claude:*
+
+This is a rich topic — let me synthesize this into a real, opinionated roadmap for you based on the current state of the field (April 2026) and direct advice from your idols.
+
+# 2026 Learning Roadmap
+
+The field is at an inflection point. MIT Technology Review named mech interp a "2026 breakthrough technology" but the field is also reckoning with limits. Neel Nanda has said the most ambitious vision is "probably dead" — full reverse-engineering before AGI is too slow. The value is now: partial understanding for monitoring, evaluation, and safety. Build toward that.
+
+## 1. Foundations you must own cold
+
+Deep CS background helps — but mech interp has specific prerequisites
+
+**Linear algebra — the true prerequisite**
+Neel Nanda's own prereq guide is specific: eigenvalues/eigenvectors, orthonormal bases, change of basis, SVD, and rank. Mech interp lives in activation spaces — you need fluency with linear maps, not just ability to use numpy. The linear representation hypothesis (features as directions in residual stream) makes this non-negotiable.
+
+Also study: information theory basics, Fourier analysis (crucial for understanding grokking / modular arithmetic circuits).
+
+→ Neel Nanda's prereq guide (neelnanda.io)
+→ 3Blue1Brown Essence of Linear Algebra
+
+**Transformers — implement one from scratch**
+Unlike normal ML, mech interp requires you to understand every moving part of the architecture. Implement GPT-2 from scratch. Understand: residual stream, attention heads, MLP layers, layer norm, how information flows via the residual stream as a "communication channel." Study Anthropic's transformer circuits framework framing.
+
+Key papers: "A Mathematical Framework for Transformer Circuits" (Elhage et al.), "In-context Learning and Induction Heads" (Olsson et al.).
+
+→ Mathematical Framework for Transformer Circuits
+→ Neel Nanda: Implementing GPT-2 from scratch (YouTube)
+
+**PyTorch + standard ML**
+You need solid PyTorch (hooks, activation extraction, gradient flow), not just sklearn. You're going to be writing custom forward passes and probing internals constantly. Know: how autograd works, custom hooks, einops for tensor manipulation, how to load HuggingFace models.
+
+**ARENA curriculum — your structured entry point**
+Alignment Research Engineer Accelerator (ARENA) is now the field's standard onboarding curriculum. It covers: transformers from scratch, mechanistic interpretability techniques, RL from scratch, evals. Neel Nanda specifically endorses it. Do the full curriculum, not just the mech interp chapters.
+
+Treat it as your semester-long bootcamp for Q1–Q2.
+
+**TransformerLens + nnsight**
+TransformerLens is Neel Nanda's library — the field's primary tool for small/medium models. TransformerLens v3 (in alpha as of late 2025) now works with large models. nnsight is better for very large models and production-scale work. Learn both. Also know Neuronpedia (feature visualization platform) and Gemma Scope (Google's open SAE release for Gemma 2).
+
+→ TransformerLens (GitHub)
+→ nnsight library
+
+## 2. Core mech interp techniques
+The toolkit every researcher uses
+
+Sparse autoencoders (SAEs) — the dominant paradigm, under scrutiny
+SAEs decompose activations into sparse, interpretable features. Anthropic's "Scaling Monosemanticity" (2024) and Gemma Scope (2024, by Neel's team) made this the field's leading technique. But in 2025, DeepMind began deprioritizing SAEs after finding simple baselines sometimes outperform them. September 2025 research suggests SAEs may learn far fewer features than their latent count implies.
+
+You need to know SAEs deeply AND understand their limitations. This intellectual honesty is what separates serious researchers from hype followers. Study: training objectives, JumpReLU vs TopK variants, reconstruction error issues, the "interpretability illusion" critique.
+→ Towards Monosemanticity (Anthropic)
+→ Gemma Scope paper (Neel Nanda et al.)
+
+Activation patching / causal tracing
+The core causal tool: intervene on a model's internals during a forward pass to find what components matter. Covers: activation patching, path patching, causal mediation analysis, interchange interventions. The ROME paper and its follow-ups are essential case studies — and so is learning where ROME was later found to be misleading (a cautionary tale Neel often cites).
+
+Circuit discovery — finding algorithmic structure
+Find the minimal subgraph (circuit) that implements a capability. Methods: edge attribution patching, ACDC (Automated Circuit DisCovery), EAP-IG. Know the 2026 MIB benchmark (Mueller et al.) which standardizes circuit localization evaluation. Classic circuits to study: induction heads, indirect object identification, modular arithmetic (grokking).
+→ ACDC paper
+
+Probing
+Train linear classifiers on activations to test whether information is linearly represented. Distinguish between: probing as hypothesis testing vs probing as feature extraction. Study the "geometry of truth" work (Marks & Tegmark) on how true/false is represented linearly. Understand why probing results can be misleading without causal intervention.
+
+Linear representation hypothesis + superposition
+The foundational theoretical lens: features are directions in activation space, and models pack more features than neurons via superposition. Study Elhage et al. "Toy Models of Superposition." Understand the debate: the "strong feature hypothesis could be wrong" position paper (2025). Know the polysemanticity problem and why it motivated SAEs.
+→ Toy Models of Superposition (Anthropic)
+
+## 3. Frontier research directions for 2026
+
+Where the open problems are — and where you should push
+
+Scaling interpretability to frontier models
+The ICML 2026 workshop explicitly asks: "How can we expand beyond toy settings to frontier models?" Current SAEs fail badly at scale (16M-latent SAE on GPT-4 reconstructions degrade to ~10% of original compute). This is a wide-open hard problem. If you can crack scalable sparse decomposition — or show why it's intractable and propose an alternative — that's a top-tier paper.
+→ Open Problems in Mechanistic Interpretability (2025)
+
+Deception detection — the highest-stakes application
+Schmidt Sciences' 2026 interpretability RFP specifically funds: detecting when model's internal state contradicts its outputs (deception/scheming). Apollo Research has shown frontier models engage in scheming behaviors. The goal is "whitebox" monitors that outperform simple prompting baselines. This is where mech interp meets AI safety most directly. Huge funding and hiring here (Apollo Research, Anthropic's safety team, DeepMind).
+→ Schmidt Sciences 2026 Interpretability RFP
+
+Chain-of-thought & reasoning model interpretability
+MIT Tech Review (Feb 2026) calls chain-of-thought monitoring a key new frontier: listening in on the internal monologue of reasoning models. Do CoT traces faithfully reflect internal computation? When models reason covertly vs. in their scratchpad? This is largely unexplored and technically fascinating — you can use mech interp tools on the generation process itself.
+
+Automated interpretability
+Using LLMs to scale interpretability — automatic feature labeling (Neuronpedia-style), automated circuit discovery, "Activation Oracle"-style decoding. The ICML 2026 CFP explicitly asks how to automate interpretability with agents. This is one of the most tractable near-term frontiers for someone with strong CS/engineering skills. You can build pipelines that scale what humans do manually.
+
+Latent reasoning, world models, internal goals
+The ICML 2026 CFP asks: "Can we find evidence for cognitive phenomena such as latent reasoning, implicit planning, search algorithms, or internal world models?" And: "How are beliefs, personas, world models, reasoning processes, implicit goals represented?" This is the deepest science in the field — closest to Chris Olah's long-term vision. High risk, high reward research.
+
+
+## 3. How to actually become world-class
+Operational advice from Neel Nanda and the field
+
+Neel's own advice: "maximize your luck surface area"
+Write publicly — blog posts, LessWrong posts, Twitter threads on your findings. Reach out to researchers whose work you admire. Say yes to unusual projects. Neel's blog posts seeded the field; he started them as an exercise to beat perfectionism, writing a post per day for a month.
+
+Crucially: don't spend months mastering prerequisites before doing research. Neel says people "wildly overestimate" the prerequisites. Get your hands dirty with mini-projects (1-5 days) as fast as possible. Mech interp has short feedback loops — this is a real advantage.
+
+MATS — the field's premier mentorship program
+MATS (ML Alignment Theory Scholars) runs twice a year (summer + winter). Neel Nanda runs a stream. This is the single highest-leverage thing you can do after building baseline skills — you get mentorship from top researchers and work on real open problems. Apply aggressively. Neel has mentored 50+ junior researchers, seven of whom now work at major AI companies.
+→ MATS program website
+
+Publish and build in public from day one
+Post your mini-project findings on LessWrong and the EA Forum. Submit to the ICML 2026 Mech Interp Workshop (deadline May 8, 2026 — coming up fast). The workshop is non-archival so you can iterate. Neel says even negative or uncertain results are valuable. Write up what you tried and why it didn't work — this is still rare and appreciated in the field.
+→ ICML 2026 Mech Interp Workshop CFP
+→ LessWrong mech interp tag
+
+Organizations worth targeting
+Anthropic (interpretability team — Chris Olah's org) · Google DeepMind (Neel Nanda's team) · Goodfire (startup, $50M Series A, applying mech interp to products, actively hiring) · Apollo Research (deception/scheming focus) · UK AI Security Institute (interpretability team) · Academic: MIT (David Bau's group), BU (Aaron Mueller), many others growing fast.
+
+Neel's take on PhDs: you don't need to finish one. View it as an environment to develop research independence. If a better opportunity comes along, take a leave of absence or drop out.
+
+
+Here's the honest, ground-level picture, drawing on where the field actually stands in 2026:
+The context you need to internalize first. Neel Nanda's view has evolved: he now sees mech interp not as a tool for fully reverse-engineering AI, but as one valuable layer in a "Swiss cheese" model of AI safety — useful for monitoring, evaluation, and incident analysis, even if complete understanding stays out of reach. Effective Altruism Forum The field is split between Anthropic's ambitious goal to "reliably detect most AI model problems by 2027" and Google DeepMind's strategic pivot away from sparse autoencoders toward more "pragmatic interpretability." GitHub You're entering a field undergoing a productive identity crisis — which is exactly when new researchers can make a real mark.
+
+What to actually do this year. Neel's concrete advice: learn the minimum viable basics, then do research. Mech interp is an empirical science with short feedback loops and modest compute requirements — get your hands dirty with 1-5 day mini-projects as fast as possible, then work up to 1-2 week sprints. Neelnanda Don't spend Q1-Q2 reading papers passively.
+
+The ARENA curriculum is the field's standard onboarding, and Neel's "Getting Started" guide is where you should begin — people wildly overestimate prerequisites. Neel Nanda
+The highest-leverage moves for your career specifically. "Maximize your luck surface area" — write publicly, reach out to researchers you admire, say yes to unusual projects. Effective Altruism Forum Neel's own blog posts (started to beat perfectionist paralysis, one per day for a month) helped seed the entire field. Effective Altruism Forum Post your mini-project results on LessWrong from day one.
+
+The ICML 2026 Mechanistic Interpretability Workshop has a paper submission deadline of May 8, 2026 Mechinterpworkshop — that's very close. If you've been doing research, even a workshop paper on a small empirical finding is worth submitting. It's non-archival.
+The workshop particularly wants: scaling interpretability beyond toy settings to frontier models, automated interpretability (using ML/agents to scale manual work), and work on how beliefs, world models, and reasoning processes are represented internally. Mechinterpworkshop Pick one of these threads and dig.
+
+The honest hard thing. Core concepts like "feature" still lack rigorous definitions, computational complexity results prove many interpretability queries are intractable, and practical methods still underperform simple baselines on safety-relevant tasks. GitHub This means the field genuinely needs people who combine engineering rigor with scientific humility — not people who cargo-cult techniques. Your CS background is an asset if you use it to build better tooling and tighter evaluations, which the field desperately needs.
+Click through the tabs in the roadmap above — each phase has specific resources and explanations of where the debates currently are. The deception detection and scaling phases are where the funding and hiring are most concentrated right now.
