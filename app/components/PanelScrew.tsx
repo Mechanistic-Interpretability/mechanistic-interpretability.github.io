@@ -12,8 +12,8 @@ const sizeMap = {
 const positionMap = {
 	"top-left": "left-3 top-3",
 	"top-right": "right-3 top-3",
-	"bottom-left": "left-3 bottom-7",
-	"bottom-right": "right-3 bottom-7",
+	"bottom-left": "left-3 bottom-3",
+	"bottom-right": "right-3 bottom-3",
 };
 
 export function PanelScrew({ position, size = "md" }: PanelScrewProps) {

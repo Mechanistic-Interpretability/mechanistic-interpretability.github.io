@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { orbitingImages } from "@/config";
 import { PanelScrew } from "./PanelScrew";
+import { SkeuomorphicShell } from "./SkeuomorphicShell";
 
 interface DesktopIconRowProps {
 	onImageClick?: (imageAlt: string) => void;
@@ -63,22 +64,10 @@ export function DesktopIconRow({
 
 	return (
 		<div className="relative hidden w-full max-w-md px-4 md:block">
-			{/* Icon row container */}
-			<div
-				className="relative overflow-hidden rounded-2xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d8dfe8] to-[#a6b2bf] shadow-[0_16px_28px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.85),inset_0_-6px_12px_rgba(71,85,105,0.24)] dark:border-slate-500/70 dark:from-[#3a4350] dark:via-[#2a313a] dark:to-[#1a2028] dark:shadow-[0_20px_36px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-6px_12px_rgba(0,0,0,0.45)]"
-				style={{
-					minHeight: "5.2rem",
-					marginTop: "0.25rem",
-					marginBottom: "0.75rem",
-				}}
+			<SkeuomorphicShell
+				className="mb-3 mt-1"
+				style={{ minHeight: "5.2rem" }}
 			>
-				{/* Surface details */}
-				<div className="plastic-grain pointer-events-none absolute inset-0 rounded-2xl" />
-				<div className="pointer-events-none absolute inset-x-6 top-1.5 h-4 rounded-full bg-white/50 blur-md dark:bg-white/10" />
-				<div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-black/15 to-transparent" />
-				<PanelScrew position="top-left" />
-				<PanelScrew position="top-right" />
-
 				{/* Icons row */}
 				<div
 					ref={scrollContainerRef}
@@ -172,7 +161,7 @@ export function DesktopIconRow({
 						style={{ width: `${scrollProgress * 100}%` }}
 					/>
 				</div>
-			</div>
+			</SkeuomorphicShell>
 		</div>
 	);
 }
