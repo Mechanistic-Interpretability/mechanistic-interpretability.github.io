@@ -82,12 +82,6 @@ export function CoNotification({ show, onHide }: CoNotificationProps) {
 					<div className="pointer-events-none absolute inset-x-5 top-2 h-5 rounded-full bg-white/60 blur-md dark:bg-white/10" />
 					<div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-gradient-to-t from-black/20 to-transparent sm:rounded-b-[1.6rem]" />
 
-					{/* Corner screws */}
-					<div className="pointer-events-none absolute left-3 top-3 h-2 w-2 rounded-full border border-slate-700/35 bg-gradient-to-b from-[#f3f7fc] to-[#95a3b3] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] dark:border-white/20 dark:from-[#556171] dark:to-[#313946]" />
-					<div className="pointer-events-none absolute right-3 top-3 h-2 w-2 rounded-full border border-slate-700/35 bg-gradient-to-b from-[#f3f7fc] to-[#95a3b3] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] dark:border-white/20 dark:from-[#556171] dark:to-[#313946]" />
-					<div className="pointer-events-none absolute bottom-7 left-3 h-2 w-2 rounded-full border border-slate-700/35 bg-gradient-to-b from-[#f3f7fc] to-[#95a3b3] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] dark:border-white/20 dark:from-[#556171] dark:to-[#313946]" />
-					<div className="pointer-events-none absolute bottom-7 right-3 h-2 w-2 rounded-full border border-slate-700/35 bg-gradient-to-b from-[#f3f7fc] to-[#95a3b3] shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] dark:border-white/20 dark:from-[#556171] dark:to-[#313946]" />
-
 					{/* Inner bezel */}
 					<div className="relative rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-1 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:rounded-2xl sm:p-1.5">
 						{/* CRT screen */}
