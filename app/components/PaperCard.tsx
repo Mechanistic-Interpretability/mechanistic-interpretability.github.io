@@ -162,7 +162,7 @@ export function PaperCard({
 						</span>
 					</div>
 
-					{/* URL Link Section */}
+					{/* URL Link Section - Skeuomorphic Button */}
 					<div className="mt-auto pt-3">
 						{paper.url ? (
 							<a
@@ -170,39 +170,50 @@ export function PaperCard({
 								target="_blank"
 								rel="noopener noreferrer"
 								onClick={(e) => e.stopPropagation()}
-								className="flex items-center gap-1 rounded border border-slate-400/40 bg-slate-100/80 px-2 py-1 font-mono text-[9px] text-slate-600 transition-all hover:border-violet-400/60 hover:bg-violet-50/50 hover:text-violet-600 dark:border-slate-600/40 dark:bg-slate-800/60 dark:text-slate-400 dark:hover:border-violet-500/30 dark:hover:bg-violet-900/20 dark:hover:text-violet-400"
+								className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] px-3 py-2 shadow-[0_2px_6px_rgba(15,23,42,0.15),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-2px_4px_rgba(71,85,105,0.15)] transition-all duration-200 hover:shadow-[0_4px_12px_rgba(15,23,42,0.2),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-2px_4px_rgba(71,85,105,0.2)] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.15)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-2px_4px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_4px_12px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-2px_4px_rgba(0,0,0,0.35)]"
 							>
-								<svg
-									className="h-3 w-3"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-									/>
-								</svg>
-								<span className="truncate">Link</span>
+								{/* Plastic grain texture */}
+								<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
+								{/* Inner bezel */}
+								<div className="absolute inset-1 rounded-md border border-slate-500/25 bg-gradient-to-b from-[#e8edf3] to-[#c8d0db] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)] dark:border-slate-600/40 dark:from-[#2a313b] dark:to-[#1e242d] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" />
+								{/* Content */}
+								<span className="relative z-10 flex items-center gap-1.5 font-mono text-[10px] font-semibold text-slate-500 transition-colors group-hover:text-violet-600 dark:text-slate-400 dark:group-hover:text-violet-400">
+									<svg
+										className="h-3.5 w-3.5"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+										/>
+									</svg>
+									<span className="truncate">Link</span>
+								</span>
 							</a>
 						) : (
-							<div className="flex items-center gap-1 rounded border border-slate-300/30 bg-slate-50/50 px-2 py-1 font-mono text-[9px] text-slate-400 dark:border-slate-700/30 dark:bg-slate-800/30 dark:text-slate-500">
-								<svg
-									className="h-3 w-3"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</svg>
-								<span>No URL</span>
+							<div className="group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-slate-400/35 bg-gradient-to-b from-[#e8edf3] to-[#c8d0db] px-3 py-2 opacity-70 shadow-[0_2px_6px_rgba(15,23,42,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] dark:border-slate-600/40 dark:from-[#2a313b] dark:to-[#1e242d] dark:shadow-[0_2px_6px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.05)]">
+								{/* Plastic grain texture */}
+								<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
+								<span className="relative z-10 flex items-center gap-1.5 font-mono text-[10px] font-semibold text-slate-400 dark:text-slate-500">
+									<svg
+										className="h-3.5 w-3.5"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+									<span>No URL</span>
+								</span>
 							</div>
 						)}
 					</div>
