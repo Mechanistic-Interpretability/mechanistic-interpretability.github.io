@@ -39,7 +39,7 @@ const HeroSection = ({
 		<div ref={containerRef} className="relative w-full px-2 py-6">
 			<div className="relative z-10">
 				<div
-					className="relative mx-auto max-w-[12rem] transition-transform duration-100"
+					className="relative mx-auto max-w-[14rem] transition-transform duration-100"
 					style={{
 						transform: `translateY(${parallaxOffset * 0.2}px)`,
 					}}
@@ -63,10 +63,10 @@ const HeroSection = ({
 			</div>
 
 			<div
-				className="flex flex-col items-center gap-3 transition-transform duration-100"
+				className="flex flex-col items-center gap-4 transition-transform duration-100 sm:gap-6"
 				style={{ transform: `translateY(${parallaxOffset * -0.1}px)` }}
 			>
-				<FeaturedPapers limit={3} />
+				<FeaturedPapers limit={4} />
 				<DesktopIconRow
 					onImageClick={onOrbitingImageClick}
 					onTerminalClick={onTerminalClick}

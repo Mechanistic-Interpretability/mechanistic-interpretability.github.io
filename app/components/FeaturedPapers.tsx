@@ -8,7 +8,7 @@ interface FeaturedPapersProps {
 	limit?: number;
 }
 
-export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
+export function FeaturedPapers({ limit = 4 }: FeaturedPapersProps) {
 	const router = useRouter();
 
 	// Get papers sorted by date (most recent first), limited to specified count
@@ -48,7 +48,7 @@ export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
 	};
 
 	return (
-		<div className="relative w-full max-w-md px-4 sm:max-w-lg md:max-w-md lg:max-w-lg">
+		<div className="relative w-full max-w-xs px-4 sm:max-w-2xl md:max-w-3xl">
 			{/* Skeuomorphic Shell Container - same as hub */}
 			<div className="relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_12px_28px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-6px_12px_rgba(71,85,105,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_16px_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-6px_14px_rgba(0,0,0,0.5)] sm:rounded-2xl sm:p-1.5">
 				{/* Plastic grain */}
@@ -115,8 +115,8 @@ export function FeaturedPapers({ limit = 3 }: FeaturedPapersProps) {
 							</button>
 						</div>
 
-						{/* Papers Cards */}
-						<div className="space-y-2 sm:space-y-3">
+						{/* Papers Grid - 2x2 layout */}
+						<div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
 							{featuredPapers.map((paper, index) => (
 								<FeaturedCard
 									key={paper._meta.path}
@@ -195,7 +195,7 @@ function FeaturedCard({
 	return (
 		<div
 			ref={cardRef}
-			className="paper-card-wrapper relative cursor-pointer touch-manipulation"
+			className="paper-card-wrapper relative h-full cursor-pointer touch-manipulation"
 			style={{
 				transform:
 					transform ||
@@ -221,7 +221,7 @@ function FeaturedCard({
 		>
 			{/* Paper Card - Same skeuomorphic style as hub */}
 			<div
-				className={`relative overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_6px_16px_rgba(15,23,42,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.1)] sm:rounded-xl sm:p-2 ${
+				className={`relative h-full overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_6px_16px_rgba(15,23,42,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.1)] sm:rounded-xl sm:p-2 ${
 					isHovered
 						? "shadow-[0_10px_28px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_28px_rgba(0,0,0,0.55)]"
 						: ""
@@ -231,7 +231,7 @@ function FeaturedCard({
 				<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg sm:rounded-xl" />
 
 				{/* Content area - same as hub inner bezel */}
-				<div className="relative flex flex-col gap-2 overflow-hidden rounded-md border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-2.5 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:gap-3 sm:rounded-lg sm:p-3 md:p-4">
+				<div className="relative flex h-full flex-col overflow-hidden rounded-md border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-2.5 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:gap-3 sm:rounded-lg sm:p-3">
 					{/* Paper fiber effect */}
 					<div
 						className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -255,7 +255,7 @@ function FeaturedCard({
 					</div>
 
 					{/* Title */}
-					<h3 className="line-clamp-2 text-xs font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-sm">
+					<h3 className="line-clamp-2 flex-1 text-xs font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-sm">
 						{paper.title}
 					</h3>
 
