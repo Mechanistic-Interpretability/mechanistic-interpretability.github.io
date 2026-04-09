@@ -193,7 +193,7 @@ export function PapersContent() {
 	const getPageTitle = () => {
 		switch (activeView) {
 			case "papers":
-				return "Mechanistic Interpretability";
+				return "MI";
 			case "people":
 				return "People";
 			case "resources":
