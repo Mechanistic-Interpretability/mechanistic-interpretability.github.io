@@ -5,6 +5,7 @@ import { DesktopIconRow } from "./DesktopIconRow";
 import { MobileIconRoll } from "./MobileIconRoll";
 import { FeaturedPapers } from "./FeaturedPapers";
 import { siteConfig } from "@/config";
+import { useIconRow } from "@/context/IconRowContext";
 
 interface HeroSectionProps {
 	macPosition: "center" | "top";
@@ -23,6 +24,7 @@ const HeroSection = ({
 }: HeroSectionProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [scrollY, setScrollY] = useState(0);
+	const { isVisible } = useIconRow();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -67,14 +69,22 @@ const HeroSection = ({
 				style={{ transform: `translateY(${parallaxOffset * -0.1}px)` }}
 			>
 				<FeaturedPapers limit={4} />
-				<DesktopIconRow
-					onImageClick={onOrbitingImageClick}
-					onTerminalClick={onTerminalClick}
-				/>
+				<div
+					className={`overflow-hidden transition-all duration-500 ease-in-out ${
+						isVisible ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
+					}`}
+				>
+					<DesktopIconRow
+						onImageClick={onOrbitingImageClick}
+						onTerminalClick={onTerminalClick}
+					/>
+				</div>
 			</div>
 
 			<div
-				className="transition-transform duration-100"
+				className={`overflow-hidden transition-all duration-500 ease-in-out ${
+					isVisible ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
+				}`}
 				style={{ transform: `translateY(${parallaxOffset * -0.1}px)` }}
 			>
 				<MobileIconRoll
