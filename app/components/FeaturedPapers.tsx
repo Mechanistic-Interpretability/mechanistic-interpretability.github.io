@@ -2,28 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useRef, useCallback } from "react";
-import { papers } from "@/lib/papers";
+import { featuredItems, type FeaturedItem } from "@/lib/papers";
+import Image from "next/image";
 
-interface FeaturedPapersProps {
-	limit?: number;
-}
-
-export function FeaturedPapers({ limit = 4 }: FeaturedPapersProps) {
+export function FeaturedPapers() {
 	const router = useRouter();
-
-	// Get papers sorted by date (most recent first), limited to specified count
-	const featuredPapers = papers
-		.sort((a, b) => {
-			// Sort by date if available, otherwise fall back to order
-			const dateA = a.date ? new Date(a.date).getTime() : 0;
-			const dateB = b.date ? new Date(b.date).getTime() : 0;
-			if (dateA && dateB) {
-				return dateB - dateA; // Most recent first
-			}
-			// Fall back to order if no dates
-			return (b.order || 0) - (a.order || 0);
-		})
-		.slice(0, limit);
 
 	const handleViewAll = () => {
 		router.push("/hub");
@@ -66,21 +49,21 @@ export function FeaturedPapers({ limit = 4 }: FeaturedPapersProps) {
 						{/* Header */}
 						<div className="mb-2 flex items-center justify-between border-b border-slate-400/30 px-2 py-2 dark:border-slate-600/30 sm:mb-3 sm:px-3 sm:py-2.5">
 							<div className="flex items-center gap-2 sm:gap-3">
-								{/* Icon container - hub style */}
-								<div className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_3px_rgba(15,23,42,0.2)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)] sm:h-8 sm:w-8 sm:rounded-lg">
-									<svg
-										className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300 sm:h-4 sm:w-4"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+								{/* Icon container - skeuomorphic card style */}
+								<div className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-md border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-0.5 shadow-[0_3px_6px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] sm:h-8 sm:w-8">
+									{/* Plastic grain texture */}
+									<div className="plastic-grain pointer-events-none absolute inset-0 rounded-md" />
+									{/* Inner bezel frame */}
+									<div className="absolute inset-0.5 overflow-hidden rounded-sm border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
+										<Image
+											src="/images/mi2.png"
+											alt="MI"
+											fill
+											className="object-contain p-0.5"
+											sizes="32px"
+											priority
 										/>
-									</svg>
+									</div>
 								</div>
 								<span className="text-sm font-bold text-slate-900 dark:text-slate-100 sm:text-base">
 									Featured
@@ -117,15 +100,23 @@ export function FeaturedPapers({ limit = 4 }: FeaturedPapersProps) {
 
 						{/* Papers Grid - 2x2 layout */}
 						<div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
-							{featuredPapers.map((paper, index) => (
-								<FeaturedCard
-									key={paper._meta.path}
-									paper={paper}
-									index={index}
-									getVenueColor={getVenueColor}
-									onClick={() => router.push(`/hub`)}
-								/>
-							))}
+							{featuredItems.map((item, index) =>
+								item.type === "paper" ? (
+									<PaperCard
+										key={item._meta.path}
+										paper={item}
+										index={index}
+										getVenueColor={getVenueColor}
+										onClick={() => router.push(`/hub`)}
+									/>
+								) : (
+									<ResourceCard
+										key={item._meta.path}
+										resource={item}
+										index={index}
+									/>
+								),
+							)}
 						</div>
 					</div>
 				</div>
@@ -134,26 +125,20 @@ export function FeaturedPapers({ limit = 4 }: FeaturedPapersProps) {
 	);
 }
 
-// Individual card component with 3D tilt effect
-interface FeaturedCardProps {
-	paper: (typeof papers)[0];
+// Paper Card component
+interface PaperCardProps {
+	paper: FeaturedItem & { type: "paper" };
 	index: number;
 	getVenueColor: (venue: string) => string;
 	onClick: () => void;
 }
 
-function FeaturedCard({
-	paper,
-	index,
-	getVenueColor,
-	onClick,
-}: FeaturedCardProps) {
+function PaperCard({ paper, index, getVenueColor, onClick }: PaperCardProps) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [transform, setTransform] = useState("");
 	const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 });
 	const cardRef = useRef<HTMLDivElement>(null);
 
-	// Random slight rotation for scattered effect (-2 to +2 degrees)
 	const baseRotation = useRef(((index % 5) - 2) * 0.6);
 
 	const handleMouseMove = useCallback(
@@ -303,6 +288,164 @@ function FeaturedCard({
 									</span>
 								</span>
 							</a>
+						)}
+					</div>
+				</div>
+
+				{/* Glare effect on hover */}
+				{isHovered && (
+					<div
+						className="pointer-events-none absolute inset-0 rounded-lg sm:rounded-xl"
+						style={{
+							background: `radial-gradient(circle at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.2) 0%, transparent 60%)`,
+							transition: "background 0.1s ease-out",
+						}}
+					/>
+				)}
+
+				{/* Corner fold effect */}
+				<div className="pointer-events-none absolute bottom-0 right-0 h-4 w-4 overflow-hidden sm:h-5 sm:w-5">
+					<div
+						className="absolute bottom-0 right-0 h-[85%] w-[85%] bg-gradient-to-tl from-slate-300/40 to-transparent dark:from-slate-700/40"
+						style={{
+							clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
+						}}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+// Resource Card component with image at top
+interface ResourceCardProps {
+	resource: FeaturedItem & { type: "resource" };
+	index: number;
+}
+
+function ResourceCard({ resource, index }: ResourceCardProps) {
+	const [isHovered, setIsHovered] = useState(false);
+	const [transform, setTransform] = useState("");
+	const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 });
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	const baseRotation = useRef(((index % 5) - 2) * 0.6);
+
+	const handleMouseMove = useCallback(
+		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (!cardRef.current) return;
+
+			const rect = cardRef.current.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			const mouseX = e.clientX - centerX;
+			const mouseY = e.clientY - centerY;
+
+			const rotateX = (mouseY / (rect.height / 2)) * -6;
+			const rotateY = (mouseX / (rect.width / 2)) * 6;
+
+			setTransform(
+				`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02) rotate(${baseRotation.current}deg)`,
+			);
+
+			const glareX = ((e.clientX - rect.left) / rect.width) * 100;
+			const glareY = ((e.clientY - rect.top) / rect.height) * 100;
+			setGlarePosition({ x: glareX, y: glareY });
+		},
+		[],
+	);
+
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+		setTransform(
+			`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) rotate(${baseRotation.current}deg)`,
+		);
+	};
+
+	const handleClick = () => {
+		if (resource.url) {
+			window.open(resource.url, "_blank");
+		}
+	};
+
+	return (
+		<div
+			ref={cardRef}
+			className="paper-card-wrapper relative h-full cursor-pointer touch-manipulation"
+			style={{
+				transform:
+					transform ||
+					`perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) rotate(${baseRotation.current}deg)`,
+				transformStyle: "preserve-3d",
+				transition: isHovered
+					? "transform 0.15s ease-out"
+					: "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
+				zIndex: isHovered ? 10 : 1,
+			}}
+			onMouseMove={handleMouseMove}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			onClick={handleClick}
+			role="button"
+			tabIndex={0}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					e.preventDefault();
+					handleClick();
+				}
+			}}
+		>
+			{/* Resource Card - Skeuomorphic style with image */}
+			<div
+				className={`relative h-full overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_6px_16px_rgba(15,23,42,0.15),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_8px_20px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.1)] sm:rounded-xl sm:p-2 ${
+					isHovered
+						? "shadow-[0_10px_28px_rgba(0,0,0,0.2)] dark:shadow-[0_10px_28px_rgba(0,0,0,0.55)]"
+						: ""
+				}`}
+			>
+				{/* Plastic grain */}
+				<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg sm:rounded-xl" />
+
+				{/* Content area - same as hub inner bezel */}
+				<div className="relative flex h-full flex-col overflow-hidden rounded-md border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:rounded-lg">
+					{/* Image at top */}
+					<div className="relative h-24 w-full overflow-hidden border-b border-slate-500/30 sm:h-28">
+						<Image
+							src={`/images/resources/${resource.image}`}
+							alt={resource.title}
+							fill
+							className="object-cover"
+							sizes="(max-width: 640px) 100vw, 50vw"
+						/>
+						{/* Image overlay gradient */}
+						<div className="absolute inset-0 bg-gradient-to-t from-[#b9c4d1]/60 to-transparent dark:from-[#141b24]/60" />
+					</div>
+
+					{/* Text content */}
+					<div className="flex flex-1 flex-col p-2.5 sm:gap-2 sm:p-3">
+						{/* Category badge */}
+						<div className="flex items-center gap-1.5">
+							<div className="h-1.5 w-1.5 rounded-full bg-violet-500 sm:h-2 sm:w-2" />
+							<span className="text-[9px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400 sm:text-[10px]">
+								{resource.category}
+							</span>
+						</div>
+
+						{/* Title */}
+						<h3 className="line-clamp-2 text-xs font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-sm">
+							{resource.title}
+						</h3>
+
+						{/* Description */}
+						{resource.description && (
+							<p className="line-clamp-2 text-[10px] italic text-slate-600 dark:text-slate-400 sm:text-xs">
+								{resource.description}
+							</p>
 						)}
 					</div>
 				</div>

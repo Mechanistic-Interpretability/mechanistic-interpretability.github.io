@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import { PaperCard } from "@/components/PaperCard";
 import PaperDetail from "@/components/PaperDetail";
 import ResourceGrid from "@/components/ResourceGrid";
@@ -192,7 +193,7 @@ export function PapersContent() {
 	const getPageTitle = () => {
 		switch (activeView) {
 			case "papers":
-				return "MI Hub";
+				return "Mechanistic Interpretability";
 			case "people":
 				return "People";
 			case "resources":
@@ -222,20 +223,21 @@ export function PapersContent() {
 							{/* Header with view toggle */}
 							<div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
 								<div className="flex items-center gap-2 sm:gap-3">
-									<div className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_3px_rgba(15,23,42,0.2)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)] sm:h-8 sm:w-8 sm:rounded-lg">
-										<svg
-											className="h-3.5 w-3.5 text-slate-700 dark:text-slate-300 sm:h-4 sm:w-4"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+									{/* Icon container - skeuomorphic card style */}
+									<div className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-md border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-0.5 shadow-[0_3px_6px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] sm:h-8 sm:w-8">
+										{/* Plastic grain texture */}
+										<div className="plastic-grain pointer-events-none absolute inset-0 rounded-md" />
+										{/* Inner bezel frame */}
+										<div className="absolute inset-0.5 overflow-hidden rounded-sm border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
+											<Image
+												src="/images/mi2.png"
+												alt="MI"
+												fill
+												className="object-contain p-0.5"
+												sizes="32px"
+												priority
 											/>
-										</svg>
+										</div>
 									</div>
 									<h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 sm:text-xl">
 										{getPageTitle()}

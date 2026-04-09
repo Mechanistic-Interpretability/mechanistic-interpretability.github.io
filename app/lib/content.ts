@@ -45,6 +45,7 @@ const papers = defineCollection({
 		category: z.enum(["Anthropic", "DeepMind", "Google", "OpenAI", "Meta"]),
 		url: z.string().optional(),
 		abstract: z.string(),
+		featured: z.boolean().default(true),
 		order: z.number().optional(),
 		date: z.coerce.date().optional(),
 	}),

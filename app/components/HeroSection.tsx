@@ -68,7 +68,7 @@ const HeroSection = ({
 				className="flex flex-col items-center gap-4 transition-transform duration-100 sm:gap-6"
 				style={{ transform: `translateY(${parallaxOffset * -0.1}px)` }}
 			>
-				<FeaturedPapers limit={4} />
+				<FeaturedPapers />
 				<div
 					className={`overflow-hidden transition-all duration-500 ease-in-out ${
 						isVisible ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
