@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { DesktopIconRow } from "./DesktopIconRow";
 import { MobileIconRoll } from "./MobileIconRoll";
 import { FeaturedPapers } from "./FeaturedPapers";
@@ -15,6 +15,14 @@ interface HeroSectionProps {
 	onTerminalClick?: () => void;
 }
 
+/**
+ * HeroSection with rAF throttled parallax for performance
+ *
+ * Optimizations:
+ * - Uses requestAnimationFrame to throttle scroll updates
+ * - Cleanup event listeners on unmount
+ * - Passive event listeners for better scroll performance
+ */
 const HeroSection = ({
 	macPosition,
 	onOrbitingImageClick,
@@ -23,19 +31,48 @@ const HeroSection = ({
 	onTerminalClick,
 }: HeroSectionProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [scrollY, setScrollY] = useState(0);
+	const [parallaxOffset, setParallaxOffset] = useState(0);
 	const { isVisible } = useIconRow();
 
-	useEffect(() => {
-		const handleScroll = () => {
-			setScrollY(window.scrollY);
-		};
+	// Use refs for throttling
+	const scrollYRef = useRef(0);
+	const rafRef = useRef<number | null>(null);
+	const isUpdatingRef = useRef(false);
 
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		return () => window.removeEventListener("scroll", handleScroll);
+	// Throttled scroll handler using requestAnimationFrame
+	const updateParallax = useCallback(() => {
+		const scrollY = scrollYRef.current;
+		setParallaxOffset(scrollY * 0.3);
+		isUpdatingRef.current = false;
 	}, []);
 
-	const parallaxOffset = scrollY * 0.3;
+	const handleScroll = useCallback(() => {
+		scrollYRef.current = window.scrollY;
+
+		// Only request animation frame if not already pending
+		if (!isUpdatingRef.current) {
+			isUpdatingRef.current = true;
+			rafRef.current = requestAnimationFrame(updateParallax);
+		}
+	}, [updateParallax]);
+
+	useEffect(() => {
+		// Set initial position
+		scrollYRef.current = window.scrollY;
+		updateParallax();
+
+		// Add scroll listener with passive option for better performance
+		window.addEventListener("scroll", handleScroll, { passive: true });
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+
+			// Cancel any pending animation frame
+			if (rafRef.current) {
+				cancelAnimationFrame(rafRef.current);
+			}
+		};
+	}, [handleScroll, updateParallax]);
 
 	return (
 		<div ref={containerRef} className="relative w-full px-2 py-6">
@@ -49,7 +86,7 @@ const HeroSection = ({
 					<button
 						onClick={onMacClick}
 						onDoubleClick={onMacDoubleClick}
-						className="cursor-pointer border-0 bg-transparent p-0 focus:outline-none"
+						className="cursor-pointer rounded-lg border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
 						aria-label="Open terminal"
 					>
 						<Image
