@@ -143,22 +143,22 @@ export default function PaperDetail({
 				}`}
 			/>
 
-			{/* Drawer panel */}
+			{/* Drawer panel - optimized for mobile */}
 			<div
 				ref={drawerRef}
-				className={`fixed right-0 top-0 z-50 h-full w-full max-w-2xl transform transition-transform duration-300 ease-out ${
+				className={`fixed right-0 top-0 z-50 h-full w-full max-w-[100vw] transform transition-transform duration-300 ease-out sm:max-w-xl md:max-w-2xl ${
 					isOpen ? "translate-x-0" : "translate-x-full"
 				}`}
 			>
-				{/* Outer shell */}
-				<div className="h-full overflow-hidden rounded-l-2xl border-l border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-2 shadow-[-12px_0_28px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-6px_12px_rgba(71,85,105,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[-16px_0_32px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-6px_14px_rgba(0,0,0,0.5)] sm:rounded-l-[1.4rem] sm:p-3">
+				{/* Outer shell - full width on mobile */}
+				<div className="h-full overflow-hidden rounded-l-xl border-l border-slate-500/35 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[-8px_0_20px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-4px_8px_rgba(71,85,105,0.2)] dark:border-slate-500/60 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[-12px_0_28px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-4px_10px_rgba(0,0,0,0.4)] sm:rounded-l-2xl sm:p-2 sm:shadow-[-12px_0_28px_rgba(15,23,42,0.22),inset_0_1px_0_rgba(255,255,255,0.9),inset_0_-6px_12px_rgba(71,85,105,0.25)] md:rounded-l-[1.4rem] md:p-3">
 					{/* Plastic grain */}
 					<div className="plastic-grain pointer-events-none absolute inset-0 rounded-l-2xl sm:rounded-l-[1.4rem]" />
 
-					{/* Close button */}
+					{/* Close button - mobile optimized with better touch target */}
 					<button
 						onClick={onClose}
-						className="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_3px_rgba(15,23,42,0.2)] transition-all hover:scale-110 dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)]"
+						className="absolute right-3 top-3 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-slate-500/35 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.2)] transition-all active:scale-95 dark:border-slate-600/60 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_3px_6px_rgba(0,0,0,0.35)] sm:right-4 sm:top-4 sm:h-10 sm:w-10 sm:hover:scale-110"
 					>
 						<svg
 							className="h-5 w-5 text-slate-700 dark:text-slate-300"
@@ -176,72 +176,72 @@ export default function PaperDetail({
 					</button>
 
 					{/* Inner bezel */}
-					<div className="relative h-full overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:rounded-2xl">
+					<div className="relative h-full overflow-hidden rounded-xl border border-slate-500/35 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),inset_0_-2px_4px_rgba(15,23,42,0.18)] dark:border-slate-600/60 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),inset_0_-2px_6px_rgba(0,0,0,0.5)] sm:rounded-2xl sm:shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)]">
 						{/* Content area with scroll */}
 						<div className="relative h-full overflow-y-auto overflow-x-hidden bg-[#edf2f8] dark:bg-[#0a0a0a]">
 							{/* Top shadow overlay for depth */}
-							<div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-black/5 to-transparent dark:from-black/20" />
+							<div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-black/5 to-transparent dark:from-black/20 sm:h-24" />
 
 							{/* Bottom shadow overlay for depth */}
-							<div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black/5 to-transparent dark:from-black/20" />
+							<div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-black/5 to-transparent dark:from-black/20 sm:h-24" />
 
-							<div className="relative z-0 p-6">
+							<div className="relative z-0 p-4 sm:p-5 md:p-6">
 								{/* Paper header */}
-								<div className="mb-6">
+								<div className="mb-4 sm:mb-6">
 									{/* Venue and year badges */}
-									<div className="mb-3 flex items-center gap-2">
+									<div className="mb-2.5 flex items-center gap-2 sm:mb-3">
 										<span
-											className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold tracking-wider ${getVenueColor(
+											className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider sm:px-3 sm:py-1 sm:text-xs ${getVenueColor(
 												paper.venue,
 											)}`}
 										>
 											{paper.venue}
 										</span>
-										<span className="font-mono text-xs text-violet-600 dark:text-violet-400">
+										<span className="font-mono text-[10px] text-violet-600 dark:text-violet-400 sm:text-xs">
 											{paper.year}
 										</span>
 									</div>
 
-									{/* Title */}
-									<h2 className="mb-4 text-2xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-3xl">
+									{/* Title - responsive sizing */}
+									<h2 className="mb-3 text-xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:mb-4 sm:text-2xl md:text-3xl">
 										{paper.title}
 									</h2>
 
-									{/* Authors */}
-									<div className="mb-4">
-										<p className="text-sm font-medium text-violet-600 dark:text-violet-400">
+									{/* Authors - mobile optimized */}
+									<div className="mb-3 sm:mb-4">
+										<p className="text-xs font-medium text-violet-600 dark:text-violet-400 sm:text-sm">
 											Authors
 										</p>
-										<p className="text-sm italic text-slate-600 dark:text-slate-400">
+										<p className="text-xs italic text-slate-600 dark:text-slate-400 sm:text-sm">
 											{paper.authors.join(", ")}
 										</p>
 									</div>
 
 									{/* Category */}
-									<div className="flex items-center gap-2">
-										<div className="h-2 w-2 rounded-full bg-violet-500" />
-										<span className="text-xs font-medium uppercase tracking-wider text-violet-600 dark:text-violet-400">
+									<div className="flex items-center gap-1.5 sm:gap-2">
+										<div className="h-1.5 w-1.5 rounded-full bg-violet-500 sm:h-2 sm:w-2" />
+										<span className="text-[10px] font-medium uppercase tracking-wider text-violet-600 dark:text-violet-400 sm:text-xs">
 											{paper.category}
 										</span>
 									</div>
 								</div>
 
-								{/* Abstract section */}
-								<div className="mb-6 rounded-xl border border-slate-400/30 bg-white/60 p-4 dark:border-slate-600/30 dark:bg-slate-800/40">
-									<h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+								{/* Abstract section - mobile optimized */}
+								<div className="mb-4 rounded-lg border border-slate-400/25 bg-white/60 p-3 dark:border-slate-600/25 dark:bg-slate-800/40 sm:mb-6 sm:rounded-xl sm:p-4">
+									<h3 className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 sm:mb-2 sm:text-xs">
 										Abstract
 									</h3>
-									<p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+									<p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300 sm:text-sm">
 										{paper.abstract}
 									</p>
 								</div>
 
-								{/* URL Section */}
-								<div className="mb-6">
-									<h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+								{/* URL Section - mobile optimized */}
+								<div className="mb-4 sm:mb-6">
+									<h3 className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 sm:mb-2 sm:text-xs">
 										URL
 									</h3>
-									<div className="flex items-center gap-2 rounded-lg border border-slate-400/50 bg-slate-100/80 px-3 py-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)] dark:border-slate-600/50 dark:bg-slate-800/60 dark:shadow-[inset_0_1px_3px_rgba(0,0,0,0.2)]">
+									<div className="flex min-h-[44px] items-center gap-2 rounded-lg border border-slate-400/40 bg-slate-100/80 px-2.5 py-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] dark:border-slate-600/40 dark:bg-slate-800/60 dark:shadow-[inset_0_1px_2px_rgba(0,0,0,0.15)] sm:px-3">
 										<span className="font-mono text-xs text-violet-600 dark:text-violet-400">
 											🔗
 										</span>
@@ -250,12 +250,12 @@ export default function PaperDetail({
 												href={paper.url}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="flex-1 truncate font-mono text-xs text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400"
+												className="flex-1 truncate font-mono text-[10px] text-slate-600 transition-colors hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400 sm:text-xs"
 											>
 												{paper.url}
 											</a>
 										) : (
-											<span className="flex-1 truncate font-mono text-xs text-slate-400 dark:text-slate-500">
+											<span className="flex-1 truncate font-mono text-[10px] text-slate-400 dark:text-slate-500 sm:text-xs">
 												No URL available
 											</span>
 										)}
@@ -264,7 +264,7 @@ export default function PaperDetail({
 												href={paper.url}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="ml-2 inline-flex items-center rounded-md border border-violet-400/40 bg-white px-2 py-0.5 text-[10px] font-medium text-violet-600 transition-all hover:border-violet-500/60 hover:bg-violet-50 dark:border-violet-500/30 dark:bg-slate-700 dark:text-violet-400 dark:hover:border-violet-400/50 dark:hover:bg-violet-900/30"
+												className="ml-1 inline-flex min-h-[32px] items-center rounded-md border border-violet-400/35 bg-white px-2 py-1 text-[10px] font-medium text-violet-600 transition-all hover:border-violet-500/50 hover:bg-violet-50 active:scale-95 dark:border-violet-500/25 dark:bg-slate-700 dark:text-violet-400 dark:hover:border-violet-400/40 dark:hover:bg-violet-900/25 sm:ml-2 sm:px-2.5"
 											>
 												<svg
 													className="mr-1 h-3 w-3"
@@ -279,15 +279,17 @@ export default function PaperDetail({
 														d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
 													/>
 												</svg>
-												Open
+												<span className="hidden sm:inline">
+													Open
+												</span>
 											</a>
 										)}
 									</div>
 								</div>
 
-								{/* MDX Content */}
+								{/* MDX Content - mobile optimized prose */}
 								{paper.mdx && (
-									<div className="prose prose-zinc max-w-none dark:prose-invert">
+									<div className="prose prose-sm prose-zinc max-w-none dark:prose-invert sm:prose">
 										<MDXContent
 											code={paper.mdx}
 											components={{

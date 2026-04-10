@@ -205,27 +205,29 @@ export default function ResourceGrid({
 
 	return (
 		<>
-			{/* Ultra-compact Filter tabs - horizontally scrollable */}
-			<div className="mb-3 sm:mb-4">
+			{/* Filter tabs - optimized for mobile touch */}
+			<div className="mb-2.5 sm:mb-4">
 				<div className="scrollbar-hide -mx-2 flex overflow-x-auto px-2 pb-1 sm:-mx-4 sm:px-4">
-					<div className="relative flex shrink-0 gap-1 rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_2px_8px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_3px_10px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.1)]">
+					<div className="relative flex shrink-0 gap-1 rounded-xl border border-slate-500/35 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1 shadow-[0_2px_6px_rgba(15,23,42,0.1),inset_0_1px_0_rgba(255,255,255,0.9)] dark:border-slate-500/60 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
 						{/* Plastic grain texture */}
-						<div className="plastic-grain pointer-events-none absolute inset-0 rounded-lg" />
+						<div className="plastic-grain pointer-events-none absolute inset-0 rounded-xl" />
 
 						{tabs.map((tab) => (
 							<button
 								key={tab.id}
 								onClick={() => setActiveFilter(tab.id)}
-								className={`relative shrink-0 rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 sm:px-2 sm:py-1 sm:text-[11px] ${
+								className={`relative min-h-[36px] shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 active:scale-95 sm:min-h-[32px] sm:px-2.5 sm:py-1.5 sm:text-xs ${
 									activeFilter === tab.id
-										? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_3px_rgba(0,0,0,0.3)]"
+										? "bg-gradient-to-b from-white to-zinc-200 text-zinc-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] dark:from-zinc-600 dark:to-zinc-700 dark:text-white dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_1px_2px_rgba(0,0,0,0.25)]"
 										: "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
 								} `}
 							>
-								<span className="flex items-center justify-center gap-1">
-									{tab.label}
+								<span className="flex items-center justify-center gap-1.5">
+									<span className="whitespace-nowrap">
+										{tab.label}
+									</span>
 									<span
-										className={`rounded-full px-1.5 py-0 text-[10px] font-semibold sm:px-1 sm:text-[9px] ${
+										className={`rounded-full px-1.5 py-0.5 text-xs font-semibold sm:text-[10px] ${
 											activeFilter === tab.id
 												? "bg-zinc-100 text-zinc-600 shadow-[inset_0_1px_1px_rgba(0,0,0,0.1)] dark:bg-zinc-500 dark:text-zinc-200"
 												: "bg-zinc-200/60 text-zinc-500 dark:bg-zinc-700/60 dark:text-zinc-400"
@@ -240,10 +242,10 @@ export default function ResourceGrid({
 				</div>
 			</div>
 
-			{/* Masonry Grid */}
+			{/* Masonry Grid - optimized for mobile */}
 			<div
 				ref={parentRef}
-				className="columns-1 gap-3 space-y-3 sm:gap-4 sm:space-y-4 md:columns-3 md:gap-5 lg:gap-6 lg:space-y-6"
+				className="columns-1 gap-2.5 space-y-2.5 sm:gap-3 sm:space-y-3 md:columns-2 md:gap-4 md:space-y-4 lg:columns-3 lg:gap-5 lg:space-y-5"
 				style={{
 					columnFill: "balance",
 				}}
@@ -257,36 +259,36 @@ export default function ResourceGrid({
 						}}
 						onClick={() => openLightbox(index)}
 					>
-						{/* Resource Card - Skeuomorphic */}
-						<div className="group relative overflow-hidden rounded-xl border border-slate-500/45 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-2 shadow-[0_8px_20px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_28px_rgba(15,23,42,0.25)] dark:border-slate-500/70 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_10px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.1)] dark:hover:shadow-[0_14px_32px_rgba(0,0,0,0.6)]">
-							{/* Plastic grain */}
-							<div className="plastic-grain pointer-events-none absolute inset-0 rounded-xl" />
+						{/* Resource Card - Mobile optimized */}
+						<div className="group relative overflow-hidden rounded-xl border border-slate-500/35 bg-gradient-to-b from-[#f4f7fb] via-[#d7dee7] to-[#a7b3c0] p-1.5 shadow-[0_4px_12px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] transition-all duration-300 active:scale-[0.98] dark:border-slate-500/60 dark:from-[#3b4450] dark:via-[#2a313b] dark:to-[#1a1f27] dark:shadow-[0_6px_16px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] dark:active:scale-[0.98] sm:hover:scale-[1.02] sm:hover:shadow-[0_8px_20px_rgba(15,23,42,0.2)] dark:sm:hover:shadow-[0_10px_24px_rgba(0,0,0,0.5)]">
+							{/* Plastic grain - reduced opacity on mobile */}
+							<div className="plastic-grain dark:opacity-8 pointer-events-none absolute inset-0 rounded-xl opacity-10" />
 
 							{/* Image container */}
-							<div className="relative overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)]">
+							<div className="relative overflow-hidden rounded-lg border border-slate-500/35 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6),inset_0_-2px_4px_rgba(15,23,42,0.15)] dark:border-slate-600/60 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),inset_0_-2px_6px_rgba(0,0,0,0.5)]">
 								<Image
 									src={`/images/resources/${resource.image}`}
 									alt={resource.title}
 									width={600}
 									height={450}
-									className="h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
+									className="h-auto w-full object-cover transition-transform duration-300 sm:group-hover:scale-105"
 									priority={index < 4}
 									unoptimized={isGif}
 								/>
 
-								{/* Category badge */}
-								<div className="absolute left-2 top-2 rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9]/90 to-[#c3cdda]/90 px-2 py-1 text-[10px] font-medium text-zinc-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.2)] backdrop-blur-sm dark:border-slate-600/70 dark:from-[#252d38]/90 dark:to-[#151b24]/90 dark:text-zinc-300 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.4)]">
+								{/* Category badge - smaller on mobile */}
+								<div className="absolute left-1.5 top-1.5 rounded-full border border-slate-500/35 bg-gradient-to-b from-[#eef3f9]/90 to-[#c3cdda]/90 px-1.5 py-0.5 text-[9px] font-medium text-zinc-700 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(15,23,42,0.15)] backdrop-blur-sm dark:border-slate-600/60 dark:from-[#252d38]/90 dark:to-[#151b24]/90 dark:text-zinc-300 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_2px_4px_rgba(0,0,0,0.3)] sm:left-2 sm:top-2 sm:px-2 sm:py-1 sm:text-[10px]">
 									{resource.category}
 								</div>
 							</div>
 
-							{/* Title section */}
-							<div className="mt-2.5 px-1 pb-1">
-								<h3 className="line-clamp-2 text-base font-semibold leading-tight text-zinc-800 dark:text-zinc-200">
+							{/* Title section - compact on mobile */}
+							<div className="mt-1.5 px-1 pb-0.5 sm:mt-2 sm:px-1 sm:pb-1">
+								<h3 className="line-clamp-2 text-sm font-semibold leading-tight text-zinc-800 dark:text-zinc-200 sm:text-base">
 									{resource.title}
 								</h3>
 								{resource.description && (
-									<p className="mt-1 line-clamp-2 text-sm text-zinc-600 dark:text-zinc-400">
+									<p className="mt-0.5 line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400 sm:mt-1 sm:text-sm">
 										{resource.description}
 									</p>
 								)}
@@ -297,9 +299,9 @@ export default function ResourceGrid({
 			</div>
 
 			{filteredResources.length === 0 && (
-				<div className="flex h-48 items-center justify-center rounded-xl border border-zinc-200 bg-neutral-100/50 dark:border-zinc-800 dark:bg-neutral-900/50 sm:h-64 sm:rounded-2xl">
-					<p className="text-sm text-zinc-500 dark:text-zinc-400">
-						No {viewType} in this category.
+				<div className="flex h-40 items-center justify-center rounded-xl border border-zinc-200 bg-neutral-100/50 dark:border-zinc-800 dark:bg-neutral-900/50 sm:h-56 sm:rounded-2xl">
+					<p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+						No {viewType} in this category
 					</p>
 				</div>
 			)}
@@ -316,10 +318,10 @@ export default function ResourceGrid({
 					{/* Backdrop with blur */}
 					<div className="absolute inset-0 bg-black/80 backdrop-blur-2xl dark:bg-black/90" />
 
-					{/* Close button — skeuomorphic */}
+					{/* Close button — mobile optimized */}
 					<button
 						onClick={closeLightbox}
-						className="absolute right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-slate-500/45 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.3)] transition-all duration-200 hover:scale-110 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_8px_rgba(15,23,42,0.2)] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.3)] dark:border-slate-600/70 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_3px_8px_rgba(0,0,0,0.5)] sm:right-6 sm:top-6"
+						className="absolute right-3 top-3 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-slate-500/35 bg-gradient-to-b from-[#eef3f9] to-[#c3cdda] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_2px_4px_rgba(15,23,42,0.25)] transition-all duration-200 active:scale-95 dark:border-slate-600/60 dark:from-[#252d38] dark:to-[#151b24] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_3px_6px_rgba(0,0,0,0.4)] sm:right-4 sm:top-4 sm:h-10 sm:w-10 sm:hover:scale-110 sm:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_4px_8px_rgba(15,23,42,0.2)]"
 						aria-label="Close"
 					>
 						<IconX
