@@ -22,6 +22,7 @@ const peopleCategories = [
 	"DeepMind",
 	"Google",
 	"OpenAI",
+	"Apollo",
 	"Meta",
 ] as const;
 

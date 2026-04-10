@@ -15,6 +15,7 @@ const categories = [
 	"DeepMind",
 	"Google",
 	"OpenAI",
+	"Apollo",
 	"Meta",
 ] as const;
 type Category = (typeof categories)[number];
