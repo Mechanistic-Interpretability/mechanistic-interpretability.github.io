@@ -121,8 +121,8 @@ export function PaperCard({
 				{/* Plastic grain */}
 				<div className="plastic-grain pointer-events-none absolute inset-0 rounded-xl" />
 
-				{/* Content area - Styled like ResourceGrid image container */}
-				<div className="relative flex h-full flex-col overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-4 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:p-6 md:p-8">
+				{/* Content area - Tighter padding like ResourceGrid */}
+				<div className="relative flex h-full flex-col overflow-hidden rounded-lg border border-slate-500/45 bg-gradient-to-b from-[#e8edf3] to-[#b9c4d1] p-2.5 shadow-[inset_0_2px_2px_rgba(255,255,255,0.65),inset_0_-3px_6px_rgba(15,23,42,0.22)] dark:border-slate-600/70 dark:from-[#202833] dark:to-[#141b24] dark:shadow-[inset_0_1px_2px_rgba(255,255,255,0.08),inset_0_-4px_9px_rgba(0,0,0,0.65)] sm:p-3 md:p-4">
 					{/* Paper fiber effect */}
 					<div
 						className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -132,19 +132,19 @@ export function PaperCard({
 					/>
 
 					{/* Venue badge */}
-					<div className="mb-3 flex items-center justify-between sm:mb-4 md:mb-6">
+					<div className="mb-2 flex items-center justify-between sm:mb-2.5">
 						<span
-							className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold tracking-wider sm:px-3 sm:py-1 md:px-4 md:py-1.5 ${getVenueColor(paper.venue)}`}
+							className={`inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-bold tracking-wider sm:text-xs ${getVenueColor(paper.venue)}`}
 						>
 							{paper.venue}
 						</span>
-						<span className="font-mono text-xs text-slate-500 dark:text-slate-400 sm:text-sm">
+						<span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 sm:text-xs">
 							{paper.year}
 						</span>
 					</div>
 
 					{/* Title */}
-					<h3 className="mb-2 line-clamp-4 text-sm font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-base">
+					<h3 className="mb-1.5 line-clamp-4 text-sm font-bold leading-tight text-slate-900 dark:text-slate-100 sm:mb-2 sm:text-base">
 						{paper.title}
 					</h3>
 
@@ -155,7 +155,7 @@ export function PaperCard({
 					</p>
 
 					{/* Category indicator */}
-					<div className="mt-3 flex items-center gap-2 sm:mt-4">
+					<div className="mt-2 flex items-center gap-2 sm:mt-2.5">
 						<div className="h-2 w-2 rounded-full bg-violet-500" />
 						<span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
 							{paper.category}
@@ -163,7 +163,7 @@ export function PaperCard({
 					</div>
 
 					{/* URL Link Section - Skeuomorphic Button */}
-					<div className="mt-auto pt-3">
+					<div className="mt-auto pt-2">
 						{paper.url ? (
 							<a
 								href={paper.url}
