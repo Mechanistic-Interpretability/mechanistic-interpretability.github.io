@@ -169,15 +169,15 @@ export function PaperCard({
 						</span>
 					</div>
 
-					{/* Title - reduced line clamp for mobile */}
-					<h3 className="mb-1 line-clamp-3 text-sm font-bold leading-tight text-slate-900 dark:text-slate-100 sm:mb-1.5 sm:text-base">
+					{/* Title - show more lines on mobile to reduce whitespace */}
+					<h3 className="mb-2 line-clamp-5 text-sm font-bold leading-snug text-slate-900 dark:text-slate-100 sm:mb-1.5 sm:line-clamp-3 sm:text-base sm:leading-tight">
 						{paper.title}
 					</h3>
 
-					{/* Authors - more compact */}
-					<p className="mb-auto line-clamp-2 text-[11px] italic text-slate-600 dark:text-slate-400 sm:text-xs">
-						{paper.authors.slice(0, 2).join(", ")}
-						{paper.authors.length > 2 && " et al."}
+					{/* Authors - show more authors on mobile */}
+					<p className="mb-auto line-clamp-3 text-[11px] italic leading-relaxed text-slate-600 dark:text-slate-400 sm:line-clamp-2 sm:text-xs">
+						{paper.authors.slice(0, 4).join(", ")}
+						{paper.authors.length > 4 && " et al."}
 					</p>
 
 					{/* Category indicator - compact */}
