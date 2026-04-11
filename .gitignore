@@ -18,3 +18,4 @@ out/
 
 # Static build output
 out/
+*.tsbuildinfo
