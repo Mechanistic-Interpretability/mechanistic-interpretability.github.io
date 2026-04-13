@@ -3,7 +3,7 @@ import { useState } from "react";
 import HeroSection from "./components/HeroSection";
 import { CraftyNotification } from "./components/CraftyNotification";
 import { CoNotification } from "./components/CoNotification";
-import { RetroTerminal } from "./components/RetroTerminal";
+import { RetroTerminal } from "./components/RetroTerminal/index";
 
 export default function Page() {
 	const [showEmailNotification, setShowEmailNotification] = useState(false);

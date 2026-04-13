@@ -268,6 +268,110 @@ Respects `prefers-reduced-motion`:
 }
 ```
 
+## RetroTerminal Component
+
+A fully-featured terminal component with Unix-style commands, search, and persistence.
+
+### Architecture
+
+```
+RetroTerminal/
+├── index.tsx          # Main orchestrator
+├── TerminalShell.tsx  # Visual shell (skeuomorphic styling)
+├── TerminalContent.tsx # Scroll area, focus trap, input
+├── useTerminal.ts     # State management + command execution
+├── commands.ts        # Command registry + help generation
+└── animations.ts      # Effects + Levenshtein distance
+```
+
+### Features
+
+**Command System**
+
+-   Unix-style commands: `cd`, `ls`, `pwd`, `goto`, `search`
+-   Tab autocomplete with suggestions
+-   Command history persistence (localStorage)
+-   Similar command suggestions on typos (Levenshtein distance)
+-   Categorized help display (navigation, search, system, info)
+
+**Quick Start Guide**
+
+-   Shows on boot instead of just "Type 'help'"
+-   Top 6 most useful commands with examples
+-   Discoverable by new users without reading docs
+
+**Search**
+
+-   Fuzzy matching with relevance scoring
+-   Results display with star ratings (★★★, ★★☆, ★☆☆)
+-   Numbered selection (type 1-8 to open)
+-   Loading indicator during search
+-   Click-to-navigate on results
+
+**Persistence**
+
+-   Command history saved to localStorage
+-   Current path remembered across sessions
+-   Last 50 commands retained
+
+**Accessibility**
+
+-   Focus trap within modal
+-   Keyboard-only navigation
+-   Escape to close
+-   ARIA labels on all interactive elements
+
+**Mobile UX**
+
+-   Max-height constraints (60vh on mobile)
+-   Swipe down to close gesture
+-   Touch-optimized tap targets
+-   Responsive font sizes
+
+### Usage
+
+```tsx
+import { RetroTerminal } from "@/components/RetroTerminal";
+
+function MyPage() {
+	const [isOpen, setIsOpen] = useState(false);
+
+	return (
+		<>
+			<button onClick={() => setIsOpen(true)}>Open Terminal</button>
+			<RetroTerminal
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+				skipBoot={false} // Skip boot animation for returning users
+			/>
+		</>
+	);
+}
+```
+
+### Commands
+
+| Command          | Description           | Example             |
+| ---------------- | --------------------- | ------------------- |
+| `search <query>` | Search blog posts     | `search attention`  |
+| `cd <section>`   | Navigate to section   | `cd blog`           |
+| `ls` / `dir`     | List sections         | `ls`                |
+| `goto <slug>`    | Open post directly    | `goto transformers` |
+| `pwd`            | Show current location | `pwd`               |
+| `back`           | Go back               | `back`              |
+| `home`           | Go to homepage        | `home`              |
+| `clear`          | Clear terminal        | `clear`             |
+| `exit`           | Close terminal        | `exit`              |
+| `help`           | Full command list     | `help`              |
+
+### Implementation Notes
+
+-   Uses React Context pattern internally via custom hook
+-   Commands are pure functions for easy testing
+-   Search algorithm extracted to `lib/search.ts`
+-   Boot sequence can be skipped for returning users
+-   All client-side state management (no server required)
+
 ## Migration Guide
 
 ### From SkeuomorphicPanel
@@ -366,11 +470,19 @@ import { getVenueColor } from "@/lib/venueColors";
 ```
 app/
 ├── components/
+│   ├── RetroTerminal/         # Modular terminal component
+│   │   ├── index.tsx          # Main entry + orchestration
+│   │   ├── TerminalShell.tsx  # Visual shell wrapper
+│   │   ├── TerminalContent.tsx # Content area + focus trap
+│   │   ├── useTerminal.ts     # State management hook
+│   │   ├── commands.ts        # Command registry + help
+│   │   └── animations.ts      # Effects + Levenshtein
 │   ├── SkeuoPrimitives.tsx    # Shell, Button, Card, Content
 │   ├── TiltCard.tsx           # 3D tilt + glare
 │   └── PanelScrew.tsx         # Screw component
 ├── lib/
 │   ├── utils.ts               # cn() helper
+│   ├── search.ts              # Post search algorithm
 │   └── venueColors.ts         # getVenueColor()
 └── globals.css                # Theme tokens, animations
 
